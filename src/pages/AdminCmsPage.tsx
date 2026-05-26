@@ -1,0 +1,2 @@
+import { AdminLayout } from '../components/admin/AdminLayout';import { FaqEditor } from '../components/admin/FaqEditor';import { ServicesEditor } from '../components/admin/ServicesEditor';import { SeoPagesEditor } from '../components/admin/SeoPagesEditor';
+export function AdminCmsPage(){return <AdminLayout><h1 className="text-4xl font-black text-ink">CMS</h1><div className="mt-8 grid gap-6 lg:grid-cols-3"><FaqEditor/><ServicesEditor/><SeoPagesEditor/></div></AdminLayout>}

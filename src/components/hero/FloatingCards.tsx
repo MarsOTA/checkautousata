@@ -1,0 +1,3 @@
+import { Clock, ShieldCheck, UserCheck } from 'lucide-react';
+const cards=[['150+ punti di controllo',ShieldCheck],['Report in 24h dal servizio',Clock],['Meccanici certificati',UserCheck]];
+export function FloatingCards(){return <div className="absolute right-5 top-1/2 hidden w-72 -translate-y-1/2 space-y-3 lg:block">{cards.map(([text,Icon],i)=>{const I=Icon as any;return <div key={text as string} className="glass flex items-center gap-4 rounded border border-cyan/30 p-5 shadow-glow" style={{transform:`translateX(${i===1?'-22px':'0'})`}}><I className="h-7 w-7 text-cyan"/><b className="text-white">{text as string}</b></div>})}</div>}

@@ -1,0 +1,17 @@
+alter table inspection_requests enable row level security;
+alter table services enable row level security;
+alter table faqs enable row level security;
+alter table testimonials enable row level security;
+alter table seo_pages enable row level security;
+alter table admin_users enable row level security;
+create policy "Anyone can create inspection request" on inspection_requests for insert to anon, authenticated with check (privacy_accepted = true);
+create policy "Admins can read requests" on inspection_requests for select to authenticated using (exists (select 1 from admin_users where user_id = auth.uid()));
+create policy "Admins can update requests" on inspection_requests for update to authenticated using (exists (select 1 from admin_users where user_id = auth.uid()));
+create policy "Public read active services" on services for select using (is_active = true);
+create policy "Public read active faqs" on faqs for select using (is_active = true);
+create policy "Public read active testimonials" on testimonials for select using (is_active = true);
+create policy "Public read published seo pages" on seo_pages for select using (status = 'published');
+create policy "Admins manage services" on services for all to authenticated using (exists (select 1 from admin_users where user_id = auth.uid())) with check (exists (select 1 from admin_users where user_id = auth.uid()));
+create policy "Admins manage faqs" on faqs for all to authenticated using (exists (select 1 from admin_users where user_id = auth.uid())) with check (exists (select 1 from admin_users where user_id = auth.uid()));
+create policy "Admins manage testimonials" on testimonials for all to authenticated using (exists (select 1 from admin_users where user_id = auth.uid())) with check (exists (select 1 from admin_users where user_id = auth.uid()));
+create policy "Admins manage seo pages" on seo_pages for all to authenticated using (exists (select 1 from admin_users where user_id = auth.uid())) with check (exists (select 1 from admin_users where user_id = auth.uid()));

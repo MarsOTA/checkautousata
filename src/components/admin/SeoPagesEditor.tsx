@@ -1,0 +1,1 @@
+export function SeoPagesEditor(){return <div className="rounded-2xl bg-white p-6"><h3 className="font-black">Pagine SEO</h3><p className="mt-3 text-muted">Base CMS pronta per pagine SEO locali e contenuti AEO.</p></div>}

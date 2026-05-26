@@ -1,0 +1,1 @@
+import { defaultServices } from '../../lib/api/services';export function ServicesEditor(){return <div className="rounded-2xl bg-white p-6"><h3 className="font-black">Servizi</h3>{defaultServices.map(s=><p className="mt-4" key={s.id}><b>{s.title}</b> da €{s.price_from}<br/><span className="text-muted">{s.description}</span></p>)}</div>}

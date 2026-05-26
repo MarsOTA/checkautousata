@@ -1,0 +1,1 @@
+import { defaultFaqs } from '../../lib/api/faqs';export function FaqEditor(){return <div className="rounded-2xl bg-white p-6"><h3 className="font-black">FAQ</h3>{defaultFaqs.map(f=><p className="mt-4" key={f.id}><b>{f.question}</b><br/><span className="text-muted">{f.answer}</span></p>)}</div>}

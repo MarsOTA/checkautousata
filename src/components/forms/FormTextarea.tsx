@@ -1,0 +1,2 @@
+import type { TextareaHTMLAttributes } from 'react';
+export function FormTextarea(props:TextareaHTMLAttributes<HTMLTextAreaElement>&{label:string}){const {label,...rest}=props;return <label className="block md:col-span-2"><span className="mb-2 block text-sm font-bold text-ink">{label}</span><textarea {...rest} className="w-full rounded-xl border border-slate-200 px-4 py-3 outline-none focus:border-cyan"/></label>}
