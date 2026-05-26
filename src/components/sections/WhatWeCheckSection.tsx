@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { ArrowRight, Car, CircleGauge, Disc3, Wrench, Zap } from 'lucide-react';
 import { CarInspectionDiagram, type InspectionArea } from './CarInspectionDiagram';
 
@@ -86,8 +86,27 @@ function getCoverFlowStyle(index: number, activeIndex: number, total: number) {
 
 export function WhatWeCheckSection() {
   const [activeId, setActiveId] = useState(inspectionAreas[0].id);
+  const mobileCardRefs = useRef<Record<string, HTMLButtonElement | null>>({});
+
   const activeIndex = inspectionAreas.findIndex((item) => item.id === activeId);
-  const activeArea = useMemo(() => inspectionAreas.find((item) => item.id === activeId) ?? inspectionAreas[0], [activeId]);
+  const activeArea = useMemo(
+    () => inspectionAreas.find((item) => item.id === activeId) ?? inspectionAreas[0],
+    [activeId]
+  );
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    if (window.innerWidth >= 1024) return;
+
+    const el = mobileCardRefs.current[activeId];
+    if (!el) return;
+
+    el.scrollIntoView({
+      behavior: 'smooth',
+      inline: 'center',
+      block: 'nearest',
+    });
+  }, [activeId]);
 
   return (
     <section id="controlli" className="relative overflow-hidden bg-[#07111F] py-12 text-white md:py-12">
@@ -111,7 +130,10 @@ export function WhatWeCheckSection() {
         </div>
 
         <div className="mt-4 text-center text-sm text-white/68 md:hidden">
-          <span className="mr-2 inline-block h-2.5 w-2.5 rounded-full align-middle" style={{ backgroundColor: activeArea.color }} />
+          <span
+            className="mr-2 inline-block h-2.5 w-2.5 rounded-full align-middle"
+            style={{ backgroundColor: activeArea.color }}
+          />
           <strong className="text-white">{activeArea.title}</strong>
         </div>
 
@@ -120,6 +142,7 @@ export function WhatWeCheckSection() {
             {inspectionAreas.map((item, index) => {
               const Icon = iconMap[item.icon];
               const active = item.id === activeId;
+
               return (
                 <button
                   key={item.id}
@@ -127,18 +150,29 @@ export function WhatWeCheckSection() {
                   onClick={() => setActiveId(item.id)}
                   onFocus={() => setActiveId(item.id)}
                   className={`absolute h-[176px] w-[470px] rounded-[1.4rem] border p-5 text-left transition-all duration-500 ${
-                    active ? 'border-white/25 bg-[#102033]/95 shadow-2xl backdrop-blur-xl' : 'border-white/10 bg-[#07111F]/82 backdrop-blur-md hover:border-white/20 hover:bg-[#0D1C2D]/90'
+                    active
+                      ? 'border-white/25 bg-[#102033]/95 shadow-2xl backdrop-blur-xl'
+                      : 'border-white/10 bg-[#07111F]/82 backdrop-blur-md hover:border-white/20 hover:bg-[#0D1C2D]/90'
                   }`}
-                  style={{ ...getCoverFlowStyle(index, activeIndex, inspectionAreas.length), boxShadow: active ? `0 0 42px ${item.softColor}` : undefined }}
+                  style={{
+                    ...getCoverFlowStyle(index, activeIndex, inspectionAreas.length),
+                    boxShadow: active ? `0 0 42px ${item.softColor}` : undefined,
+                  }}
                 >
-                  <span className="absolute right-5 top-5 h-4 w-4 rounded-full" style={{ backgroundColor: item.color, boxShadow: `0 0 22px ${item.color}` }}>
+                  <span
+                    className="absolute right-5 top-5 h-4 w-4 rounded-full"
+                    style={{ backgroundColor: item.color, boxShadow: `0 0 22px ${item.color}` }}
+                  >
                     <span className="absolute inset-0 animate-ping rounded-full" style={{ backgroundColor: item.color }} />
                   </span>
 
                   <div className="flex h-full items-center gap-5">
                     <div
                       className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full border"
-                      style={{ borderColor: active ? item.color : 'rgba(255,255,255,0.12)', backgroundColor: active ? item.softColor : 'rgba(255,255,255,0.04)' }}
+                      style={{
+                        borderColor: active ? item.color : 'rgba(255,255,255,0.12)',
+                        backgroundColor: active ? item.softColor : 'rgba(255,255,255,0.04)',
+                      }}
                     >
                       <Icon className="h-8 w-8" style={{ color: active ? item.color : 'rgba(255,255,255,0.72)' }} />
                     </div>
@@ -156,20 +190,28 @@ export function WhatWeCheckSection() {
             })}
           </div>
 
-          <div className="-mx-4 flex snap-x gap-4 overflow-x-auto px-4 pb-4 lg:hidden">
+          <div className="-mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth px-4 pb-4 lg:hidden">
             {inspectionAreas.map((item) => {
               const Icon = iconMap[item.icon];
               const active = item.id === activeId;
+
               return (
                 <button
                   key={item.id}
+                  ref={(node) => {
+                    mobileCardRefs.current[item.id] = node;
+                  }}
                   type="button"
                   onClick={() => setActiveId(item.id)}
+                  onFocus={() => setActiveId(item.id)}
                   className={`relative min-w-[82vw] snap-center rounded-[1.5rem] border p-5 text-left transition sm:min-w-[420px] ${
-                    active ? 'border-white/25 bg-[#102033]/95' : 'border-white/10 bg-white/[0.04]'
+                    active ? 'border-white/25 bg-[#102033]/95 shadow-[0_0_28px_rgba(18,207,244,0.12)]' : 'border-white/10 bg-white/[0.04]'
                   }`}
                 >
-                  <span className="absolute right-5 top-5 h-3.5 w-3.5 rounded-full" style={{ backgroundColor: item.color, boxShadow: `0 0 18px ${item.color}` }} />
+                  <span
+                    className="absolute right-5 top-5 h-3.5 w-3.5 rounded-full"
+                    style={{ backgroundColor: item.color, boxShadow: `0 0 18px ${item.color}` }}
+                  />
                   <div className="flex items-start gap-4">
                     <Icon className="mt-1 h-7 w-7 shrink-0" style={{ color: item.color }} />
                     <div>
