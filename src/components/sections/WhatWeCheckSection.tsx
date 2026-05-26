@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { ArrowLeft, ArrowRight, HandPointer } from 'lucide-react';
+import { ArrowLeft, ArrowRight, MousePointer2 } from 'lucide-react';
 import {
   CarInspectionDiagram,
   checkAreas,
