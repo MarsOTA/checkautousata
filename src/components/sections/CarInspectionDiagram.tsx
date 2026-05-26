@@ -1,7 +1,7 @@
-import type { ComponentType } from 'react';
 import { Car, CircleGauge, Disc3, Gauge, ShieldCheck, Wrench, Zap } from 'lucide-react';
+import type { ComponentType } from 'react';
 
-export type InspectionSpotId =
+export type CheckAreaId =
   | 'motore'
   | 'freni'
   | 'sospensioni'
@@ -10,92 +10,133 @@ export type InspectionSpotId =
   | 'interni'
   | 'sicurezza';
 
-type InspectionSpot = {
-  id: InspectionSpotId;
+export type CheckArea = {
+  id: CheckAreaId;
   title: string;
+  description: string;
   x: string;
   y: string;
   icon: ComponentType<{ className?: string }>;
 };
 
-const spots: InspectionSpot[] = [
-  { id: 'motore', title: 'Motore e trasmissione', x: '25%', y: '53%', icon: Wrench },
-  { id: 'freni', title: 'Impianto frenante', x: '27%', y: '73%', icon: Disc3 },
-  { id: 'sospensioni', title: 'Sospensioni e sterzo', x: '70%', y: '73%', icon: CircleGauge },
-  { id: 'elettronica', title: 'Elettronica e centraline', x: '52%', y: '50%', icon: Zap },
-  { id: 'carrozzeria', title: 'Carrozzeria e vernice', x: '50%', y: '27%', icon: ShieldCheck },
-  { id: 'interni', title: 'Interni e dotazioni', x: '57%', y: '39%', icon: Car },
-  { id: 'sicurezza', title: 'Sicurezza e airbag', x: '65%', y: '45%', icon: Gauge },
+export const checkAreas: CheckArea[] = [
+  {
+    id: 'motore',
+    title: 'Motore e trasmissione',
+    description: 'Controllo visivo di motore, cambio, perdite, livelli e rumorosità anomale.',
+    x: '23%',
+    y: '57%',
+    icon: Wrench,
+  },
+  {
+    id: 'freni',
+    title: 'Impianto frenante',
+    description: 'Verifica di dischi, pastiglie, tubi freno, liquido e usura visibile.',
+    x: '31%',
+    y: '75%',
+    icon: Disc3,
+  },
+  {
+    id: 'sospensioni',
+    title: 'Sospensioni e sterzo',
+    description: 'Controllo di assetto, giochi, braccetti, rumorosità e componenti soggetti a usura.',
+    x: '73%',
+    y: '75%',
+    icon: CircleGauge,
+  },
+  {
+    id: 'elettronica',
+    title: 'Elettronica e centraline',
+    description: 'Lettura OBD-II, spie, errori memorizzati e principali anomalie elettroniche.',
+    x: '55%',
+    y: '58%',
+    icon: Zap,
+  },
+  {
+    id: 'carrozzeria',
+    title: 'Carrozzeria e vernice',
+    description: 'Segni di urti, riverniciature, difetti estetici, allineamenti e parti sostituite.',
+    x: '67%',
+    y: '50%',
+    icon: ShieldCheck,
+  },
+  {
+    id: 'interni',
+    title: 'Interni e dotazioni',
+    description: 'Usura abitacolo, comandi, climatizzazione, accessori e funzionamento dotazioni.',
+    x: '51%',
+    y: '38%',
+    icon: Car,
+  },
+  {
+    id: 'sicurezza',
+    title: 'Sicurezza e airbag',
+    description: 'Controlli visivi sugli elementi di sicurezza, cinture, airbag e dispositivi principali.',
+    x: '82%',
+    y: '52%',
+    icon: Gauge,
+  },
 ];
 
 type Props = {
-  activeSpot?: InspectionSpotId;
-  onSpotChange?: (spot: InspectionSpotId | undefined) => void;
+  activeId: CheckAreaId;
+  onActiveChange: (id: CheckAreaId) => void;
 };
 
-export function CarInspectionDiagram({ activeSpot, onSpotChange }: Props) {
-  const activeTitle = spots.find((spot) => spot.id === activeSpot)?.title;
-
+export function CarInspectionDiagram({ activeId, onActiveChange }: Props) {
   return (
-    <div className="relative overflow-hidden rounded-[2rem] border border-cyan/20 bg-[#061827] p-4 shadow-glow sm:p-6 lg:p-8">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_30%_45%,rgba(18,207,244,.20),transparent_30%),radial-gradient(circle_at_75%_55%,rgba(18,207,244,.12),transparent_30%)]" />
-      <div className="pointer-events-none absolute inset-0 opacity-[0.08] [background-image:linear-gradient(rgba(18,207,244,.65)_1px,transparent_1px),linear-gradient(90deg,rgba(18,207,244,.65)_1px,transparent_1px)] [background-size:36px_36px]" />
+    <div className="relative mx-auto w-full max-w-6xl select-none px-2 py-8 sm:px-6 lg:py-12">
+      <div className="pointer-events-none absolute inset-x-[8%] bottom-[8%] h-24 rounded-full bg-cyan-300/20 blur-3xl" />
+      <div className="pointer-events-none absolute inset-x-[14%] bottom-[14%] h-8 rounded-full bg-black/50 blur-xl" />
 
-      <div className="relative z-10 mx-auto aspect-[1620/636] w-full max-w-5xl">
+      <div className="relative z-10 mx-auto w-full">
         <img
           src="/assets/carinspect.svg"
-          alt="Schema tecnico laterale dell’auto con punti di controllo"
-          className={`h-full w-full object-contain drop-shadow-[0_0_28px_rgba(18,207,244,0.28)] transition duration-500 ${
-            activeSpot ? 'scale-[1.018]' : 'scale-100'
-          }`}
+          alt="Schema tecnico auto con punti di controllo"
+          className="mx-auto block w-full max-w-5xl opacity-95 drop-shadow-[0_0_38px_rgba(18,207,244,0.22)]"
           draggable={false}
         />
 
-        {spots.map((spot) => {
-          const Icon = spot.icon;
-          const active = activeSpot === spot.id;
+        {checkAreas.map((area) => {
+          const Icon = area.icon;
+          const isActive = activeId === area.id;
 
           return (
             <button
-              key={spot.id}
+              key={area.id}
               type="button"
-              aria-label={spot.title}
-              onMouseEnter={() => onSpotChange?.(spot.id)}
-              onMouseLeave={() => onSpotChange?.(undefined)}
-              onFocus={() => onSpotChange?.(spot.id)}
-              onBlur={() => onSpotChange?.(undefined)}
-              className="group absolute z-20 -translate-x-1/2 -translate-y-1/2 outline-none"
-              style={{ left: spot.x, top: spot.y }}
+              aria-label={area.title}
+              onMouseEnter={() => onActiveChange(area.id)}
+              onFocus={() => onActiveChange(area.id)}
+              onClick={() => onActiveChange(area.id)}
+              className="group absolute -translate-x-1/2 -translate-y-1/2 outline-none"
+              style={{ left: area.x, top: area.y }}
             >
               <span
-                className={`absolute left-1/2 top-1/2 h-14 w-14 -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan/20 blur-xl transition duration-300 ${
-                  active ? 'scale-175 opacity-100' : 'scale-100 opacity-55 group-hover:scale-150 group-hover:opacity-100'
+                className={`absolute left-1/2 top-1/2 rounded-full bg-cyan-300/30 blur-xl transition-all duration-300 -translate-x-1/2 -translate-y-1/2 ${
+                  isActive ? 'h-20 w-20 opacity-100' : 'h-11 w-11 opacity-60 group-hover:h-16 group-hover:w-16 group-hover:opacity-100'
                 }`}
               />
               <span
-                className={`relative flex h-5 w-5 items-center justify-center rounded-full border-2 border-white bg-cyan shadow-[0_0_26px_rgba(18,207,244,.8)] transition duration-300 ${
-                  active ? 'scale-[1.7] ring-8 ring-cyan/20' : 'scale-100 group-hover:scale-125 group-hover:ring-8 group-hover:ring-cyan/20'
+                className={`relative flex items-center justify-center rounded-full border-2 border-white bg-cyan-300 shadow-[0_0_30px_rgba(34,211,238,.9)] transition-all duration-300 ${
+                  isActive ? 'h-7 w-7 scale-125 ring-8 ring-cyan-300/20' : 'h-5 w-5 group-hover:scale-125 group-hover:ring-8 group-hover:ring-cyan-300/20'
                 }`}
               >
-                <span className="h-1.5 w-1.5 rounded-full bg-white" />
+                <span className="h-2 w-2 rounded-full bg-white" />
               </span>
               <span
-                className={`pointer-events-none absolute left-1/2 top-8 min-w-max -translate-x-1/2 rounded-xl border border-cyan/25 bg-[#07111F]/95 px-3 py-2 text-xs font-semibold text-white shadow-glow backdrop-blur transition duration-200 ${
-                  active ? 'translate-y-0 opacity-100' : 'translate-y-1 opacity-0 group-hover:translate-y-0 group-hover:opacity-100'
+                className={`pointer-events-none absolute left-1/2 top-9 z-20 min-w-max -translate-x-1/2 rounded-full border border-white/10 bg-slate-950/90 px-3 py-1.5 text-xs font-semibold text-white shadow-2xl backdrop-blur transition-all duration-200 ${
+                  isActive ? 'translate-y-0 opacity-100' : 'translate-y-1 opacity-0 group-hover:translate-y-0 group-hover:opacity-100'
                 }`}
               >
-                <span className="flex items-center gap-2">
-                  <Icon className="h-3.5 w-3.5 text-cyan" />
-                  {spot.title}
+                <span className="inline-flex items-center gap-2">
+                  <Icon className="h-3.5 w-3.5 text-cyan-300" />
+                  {area.title}
                 </span>
               </span>
             </button>
           );
         })}
-      </div>
-
-      <div className="absolute bottom-5 left-5 z-20 hidden rounded-2xl border border-cyan/20 bg-[#07111F]/80 px-4 py-3 text-xs text-white/70 backdrop-blur sm:block">
-        Area attiva: <span className="font-bold text-cyan">{activeTitle || 'passa sopra un controllo'}</span>
       </div>
     </div>
   );

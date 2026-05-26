@@ -1,72 +1,134 @@
-import { useState } from 'react';
-import { Container } from '../layout/Container';
-import { CarInspectionDiagram, type InspectionSpotId } from './CarInspectionDiagram';
-
-const items: { id: InspectionSpotId; title: string; description: string }[] = [
-  { id: 'motore', title: 'Motore e trasmissione', description: 'Perdite, rumori, fluidi, stato generale e risposta del gruppo motore.' },
-  { id: 'freni', title: 'Impianto frenante', description: 'Dischi, pastiglie, usura visibile e comportamento in sicurezza.' },
-  { id: 'sospensioni', title: 'Sospensioni e sterzo', description: 'Giochi, rumorosità, assetto, braccetti e componenti soggetti a usura.' },
-  { id: 'elettronica', title: 'Elettronica e centraline', description: 'Lettura OBD-II, spie, errori memorizzati e controlli principali.' },
-  { id: 'carrozzeria', title: 'Carrozzeria e vernice', description: 'Segni di urti, riverniciature, difetti estetici e allineamenti.' },
-  { id: 'interni', title: 'Interni e dotazioni', description: 'Usura abitacolo, comandi, accessori, climatizzazione e funzioni principali.' },
-  { id: 'sicurezza', title: 'Sicurezza e airbag', description: 'Controlli visivi e funzionali sugli elementi essenziali di sicurezza.' },
-];
+import { useMemo, useState } from 'react';
+import { ArrowLeft, ArrowRight, HandPointer } from 'lucide-react';
+import {
+  CarInspectionDiagram,
+  checkAreas,
+  type CheckAreaId,
+} from './CarInspectionDiagram';
 
 export function WhatWeCheckSection() {
-  const [activeSpot, setActiveSpot] = useState<InspectionSpotId | undefined>('motore');
+  const [activeId, setActiveId] = useState<CheckAreaId>('motore');
+  const activeIndex = checkAreas.findIndex((item) => item.id === activeId);
+  const activeArea = useMemo(
+    () => checkAreas.find((item) => item.id === activeId) ?? checkAreas[0],
+    [activeId]
+  );
+
+  const goToPrevious = () => {
+    const nextIndex = (activeIndex - 1 + checkAreas.length) % checkAreas.length;
+    setActiveId(checkAreas[nextIndex].id);
+  };
+
+  const goToNext = () => {
+    const nextIndex = (activeIndex + 1) % checkAreas.length;
+    setActiveId(checkAreas[nextIndex].id);
+  };
 
   return (
-    <section id="servizi" className="grid-bg bg-deep py-24 text-white">
-      <Container className="grid items-center gap-12 lg:grid-cols-[1.25fr_.75fr]">
-        <div>
-          <p className="text-sm font-bold uppercase tracking-[0.25em] text-cyan">Checklist tecnica</p>
-          <h2 className="mt-3 text-4xl font-black tracking-tight">COSA CONTROLLIAMO</h2>
-          <div className="mt-4 h-1 w-20 bg-cyan" />
-          <p className="mt-5 max-w-2xl text-white/70">
-            Passa sopra l’elenco o sui punti dell’auto: ogni area evidenzia una macro-verifica dell’ispezione pre-acquisto.
+    <section
+      id="cosa-controlliamo"
+      className="relative overflow-hidden bg-[#06111F] py-24 text-white sm:py-28"
+    >
+      <div
+        className="absolute inset-0 bg-cover bg-center opacity-70"
+        style={{ backgroundImage: "url('/assets/inspection-section-bg.svg')" }}
+        aria-hidden="true"
+      />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_30%,rgba(18,207,244,.18),transparent_32%),linear-gradient(to_bottom,rgba(6,17,31,.80),rgba(6,17,31,.72)_45%,rgba(6,17,31,.92))]" />
+
+      <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto mb-10 max-w-4xl text-center">
+          <p className="text-sm font-bold uppercase tracking-[0.32em] text-cyan-300">
+            Cosa controlliamo
           </p>
-          <div className="mt-10">
-            <CarInspectionDiagram activeSpot={activeSpot} onSpotChange={setActiveSpot} />
+          <h2 className="mt-4 text-4xl font-black tracking-tight sm:text-5xl lg:text-6xl">
+            Ogni dettaglio, <span className="text-cyan-300">sotto controllo.</span>
+          </h2>
+          <p className="mx-auto mt-5 max-w-3xl text-base leading-relaxed text-white/72 sm:text-lg">
+            Passa sui punti dell’auto o sulle card per scoprire le aree che ispezioniamo durante il controllo pre-acquisto.
+          </p>
+        </div>
+
+        <CarInspectionDiagram activeId={activeId} onActiveChange={setActiveId} />
+
+        <div className="mx-auto mt-2 flex max-w-4xl items-center justify-center gap-3 text-sm text-white/70">
+          <HandPointer className="h-5 w-5 text-cyan-300" />
+          <span>Interagisci con gli spot o scorri le card</span>
+        </div>
+
+        <div className="mt-10 flex items-center justify-between gap-4">
+          <div>
+            <p className="text-sm uppercase tracking-[0.24em] text-cyan-300">Aree ispezionate</p>
+            <h3 className="mt-1 text-2xl font-bold">{activeArea.title}</h3>
+          </div>
+
+          <div className="hidden items-center gap-3 sm:flex">
+            <button
+              type="button"
+              onClick={goToPrevious}
+              aria-label="Area precedente"
+              className="rounded-2xl border border-white/10 bg-white/5 p-3 text-white transition hover:border-cyan-300/40 hover:bg-cyan-300/10"
+            >
+              <ArrowLeft className="h-5 w-5" />
+            </button>
+            <button
+              type="button"
+              onClick={goToNext}
+              aria-label="Area successiva"
+              className="rounded-2xl border border-white/10 bg-white/5 p-3 text-white transition hover:border-cyan-300/40 hover:bg-cyan-300/10"
+            >
+              <ArrowRight className="h-5 w-5" />
+            </button>
           </div>
         </div>
 
-        <div className="rounded-3xl border border-white/10 bg-navy/55 p-6 shadow-glow backdrop-blur lg:p-8">
-          <h3 className="text-xl font-bold">Aree principali</h3>
-          <p className="mt-2 text-sm text-white/55">Interazione hover: lo spot corrispondente cresce e si illumina sul veicolo.</p>
+        <div className="mt-5 overflow-x-auto pb-4 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          <div className="flex min-w-max gap-4 xl:grid xl:min-w-0 xl:grid-cols-7">
+            {checkAreas.map((area) => {
+              const Icon = area.icon;
+              const isActive = activeId === area.id;
 
-          <ul className="mt-7 space-y-3">
-            {items.map((item) => {
-              const active = activeSpot === item.id;
               return (
-                <li key={item.id}>
-                  <button
-                    type="button"
-                    onMouseEnter={() => setActiveSpot(item.id)}
-                    onFocus={() => setActiveSpot(item.id)}
-                    className={`group w-full rounded-2xl border p-4 text-left transition duration-300 ${
-                      active
-                        ? 'border-cyan/60 bg-cyan/10 shadow-glow'
-                        : 'border-white/10 bg-white/[0.03] hover:border-cyan/35 hover:bg-cyan/5'
-                    }`}
-                  >
-                    <div className="flex items-start gap-4">
-                      <span
-                        className={`mt-1 h-3 w-3 shrink-0 rounded-full transition duration-300 ${
-                          active ? 'scale-125 bg-cyan shadow-glow' : 'bg-cyan/70 group-hover:bg-cyan'
-                        }`}
-                      />
-                      <span>
-                        <span className="block text-base font-bold text-white">{item.title}</span>
-                        <span className="mt-1 block text-sm leading-relaxed text-white/58">{item.description}</span>
-                      </span>
-                    </div>
-                  </button>
-                </li>
+                <button
+                  key={area.id}
+                  type="button"
+                  onMouseEnter={() => setActiveId(area.id)}
+                  onFocus={() => setActiveId(area.id)}
+                  onClick={() => setActiveId(area.id)}
+                  className={`w-[260px] rounded-[1.6rem] border p-5 text-left transition-all duration-300 xl:w-auto ${
+                    isActive
+                      ? 'scale-[1.015] border-cyan-300/70 bg-cyan-300/10 shadow-[0_0_34px_rgba(34,211,238,.18)]'
+                      : 'border-white/10 bg-slate-950/35 hover:border-cyan-300/35 hover:bg-cyan-300/5'
+                  }`}
+                >
+                  <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-full border border-cyan-300/20 bg-cyan-300/10">
+                    <Icon className={`h-7 w-7 ${isActive ? 'text-cyan-200' : 'text-cyan-300/80'}`} />
+                  </div>
+                  <h4 className="text-base font-bold text-white">{area.title}</h4>
+                  <p className="mt-3 text-sm leading-relaxed text-white/62">{area.description}</p>
+                  <span className="mt-5 inline-flex items-center text-sm font-semibold text-cyan-300">
+                    Scopri di più <ArrowRight className="ml-2 h-4 w-4" />
+                  </span>
+                </button>
               );
             })}
-          </ul>
+          </div>
         </div>
-      </Container>
+
+        <div className="mt-4 flex justify-center gap-2">
+          {checkAreas.map((area) => (
+            <button
+              key={area.id}
+              type="button"
+              aria-label={`Vai a ${area.title}`}
+              onClick={() => setActiveId(area.id)}
+              className={`h-2.5 rounded-full transition-all duration-300 ${
+                activeId === area.id ? 'w-8 bg-cyan-300' : 'w-2.5 bg-white/20 hover:bg-cyan-300/50'
+              }`}
+            />
+          ))}
+        </div>
+      </div>
     </section>
   );
 }
