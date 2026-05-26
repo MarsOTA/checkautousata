@@ -1,0 +1,68 @@
+<svg width="1920" height="980" viewBox="0 0 1920 980" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="980" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#06111F"/>
+      <stop offset="0.45" stop-color="#0A2035"/>
+      <stop offset="1" stop-color="#07111F"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(1060 470) rotate(90) scale(430 830)">
+      <stop offset="0" stop-color="#12CFF4" stop-opacity="0.22"/>
+      <stop offset="0.42" stop-color="#12CFF4" stop-opacity="0.08"/>
+      <stop offset="1" stop-color="#12CFF4" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="blur" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8"/>
+    </filter>
+    <filter id="soft" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="2"/>
+    </filter>
+  </defs>
+
+  <rect width="1920" height="980" fill="url(#sky)"/>
+  <rect width="1920" height="980" fill="url(#glow)"/>
+
+  <!-- blurred Italian/European exterior garage-box street, created specifically for this section -->
+  <g opacity="0.44" filter="url(#blur)">
+    <rect x="0" y="520" width="1920" height="460" fill="#06111F"/>
+    <path d="M0 575 C310 535 525 545 770 570 C1040 597 1350 560 1920 530 L1920 980 L0 980 Z" fill="#0B1B2B"/>
+    <path d="M160 330 H640 V600 H160 Z" fill="#C8D5DE" fill-opacity="0.18"/>
+    <path d="M690 305 H1180 V615 H690 Z" fill="#E8EEF5" fill-opacity="0.16"/>
+    <path d="M1220 340 H1785 V625 H1220 Z" fill="#D6DEE8" fill-opacity="0.13"/>
+
+    <rect x="235" y="420" width="250" height="180" rx="8" fill="#142A3D"/>
+    <rect x="760" y="410" width="245" height="190" rx="8" fill="#102438"/>
+    <rect x="1060" y="410" width="245" height="190" rx="8" fill="#11263A"/>
+    <rect x="1325" y="420" width="255" height="185" rx="8" fill="#102436"/>
+
+    <rect x="240" y="442" width="240" height="10" fill="#6B7F8D" fill-opacity="0.26"/>
+    <rect x="240" y="480" width="240" height="10" fill="#6B7F8D" fill-opacity="0.22"/>
+    <rect x="240" y="518" width="240" height="10" fill="#6B7F8D" fill-opacity="0.18"/>
+    <rect x="765" y="440" width="235" height="9" fill="#7E8C97" fill-opacity="0.24"/>
+    <rect x="765" y="478" width="235" height="9" fill="#7E8C97" fill-opacity="0.2"/>
+    <rect x="765" y="516" width="235" height="9" fill="#7E8C97" fill-opacity="0.16"/>
+    <rect x="1065" y="440" width="235" height="9" fill="#7E8C97" fill-opacity="0.24"/>
+    <rect x="1065" y="478" width="235" height="9" fill="#7E8C97" fill-opacity="0.2"/>
+    <rect x="1065" y="516" width="235" height="9" fill="#7E8C97" fill-opacity="0.16"/>
+    <rect x="1330" y="450" width="245" height="9" fill="#7E8C97" fill-opacity="0.23"/>
+    <rect x="1330" y="488" width="245" height="9" fill="#7E8C97" fill-opacity="0.18"/>
+    <rect x="1330" y="526" width="245" height="9" fill="#7E8C97" fill-opacity="0.16"/>
+
+    <circle cx="210" cy="355" r="16" fill="#FDE68A" fill-opacity="0.35"/>
+    <circle cx="715" cy="348" r="14" fill="#FDE68A" fill-opacity="0.28"/>
+    <circle cx="1265" cy="368" r="18" fill="#FDE68A" fill-opacity="0.22"/>
+    <circle cx="1650" cy="360" r="12" fill="#FDE68A" fill-opacity="0.25"/>
+  </g>
+
+  <g opacity="0.12">
+    <path d="M0 716H1920" stroke="#FFFFFF"/>
+    <path d="M0 762H1920" stroke="#FFFFFF"/>
+    <path d="M0 810H1920" stroke="#FFFFFF"/>
+    <path d="M0 866H1920" stroke="#FFFFFF"/>
+  </g>
+
+  <g opacity="0.14" filter="url(#soft)">
+    <ellipse cx="960" cy="790" rx="720" ry="90" fill="#12CFF4"/>
+  </g>
+
+  <rect width="1920" height="980" fill="#06111F" opacity="0.38"/>
+</svg>
