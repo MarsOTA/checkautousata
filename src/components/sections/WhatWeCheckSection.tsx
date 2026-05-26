@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { ArrowLeft, ArrowRight, Car, CircleGauge, Disc3, Wrench, Zap } from 'lucide-react';
+import { ArrowRight, Car, CircleGauge, Disc3, Wrench, Zap } from 'lucide-react';
 import {
   CarInspectionDiagram,
   type InspectionArea,
@@ -13,8 +13,9 @@ const inspectionAreas: InspectionArea[] = [
       'Controllo visivo di perdite, livelli, rumorosità, fumosità e funzionamento generale.',
     color: '#B8FF2C',
     softColor: 'rgba(184,255,44,0.18)',
-    x: '25%',
-    y: '57%',
+    // motore spostato nella zona anteriore/cofano, non vicino alla ruota posteriore
+    x: '78%',
+    y: '48%',
     labelY: '-44px',
     icon: 'engine',
   },
@@ -100,23 +101,13 @@ function getCoverFlowStyle(index: number, activeIndex: number, total: number) {
 }
 
 export function WhatWeCheckSection() {
-  const [activeId, setActiveId] = useState(inspectionAreas[2].id);
+  const [activeId, setActiveId] = useState(inspectionAreas[0].id);
 
   const activeIndex = inspectionAreas.findIndex((item) => item.id === activeId);
   const activeArea = useMemo(
     () => inspectionAreas.find((item) => item.id === activeId) ?? inspectionAreas[0],
     [activeId]
   );
-
-  const goPrev = () => {
-    const nextIndex = (activeIndex - 1 + inspectionAreas.length) % inspectionAreas.length;
-    setActiveId(inspectionAreas[nextIndex].id);
-  };
-
-  const goNext = () => {
-    const nextIndex = (activeIndex + 1) % inspectionAreas.length;
-    setActiveId(inspectionAreas[nextIndex].id);
-  };
 
   return (
     <section
@@ -150,25 +141,6 @@ export function WhatWeCheckSection() {
         </div>
 
         <div className="mt-5 md:mt-6">
-          <div className="mb-2 flex items-center justify-end gap-3">
-            <button
-              type="button"
-              onClick={goPrev}
-              aria-label="Card precedente"
-              className="rounded-2xl border border-white/10 bg-white/5 p-3 text-white transition hover:border-cyan-300/40 hover:bg-cyan-300/10"
-            >
-              <ArrowLeft className="h-5 w-5" />
-            </button>
-            <button
-              type="button"
-              onClick={goNext}
-              aria-label="Card successiva"
-              className="rounded-2xl border border-white/10 bg-white/5 p-3 text-white transition hover:border-cyan-300/40 hover:bg-cyan-300/10"
-            >
-              <ArrowRight className="h-5 w-5" />
-            </button>
-          </div>
-
           <div className="relative mx-auto hidden h-[205px] max-w-7xl items-center justify-center overflow-hidden [perspective:1200px] lg:flex">
             {inspectionAreas.map((item, index) => {
               const Icon = iconMap[item.icon];
