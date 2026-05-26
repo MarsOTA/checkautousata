@@ -52,7 +52,7 @@ export function WhatWeCheckSection() {
         <CarInspectionDiagram activeId={activeId} onActiveChange={setActiveId} />
 
         <div className="mx-auto mt-2 flex max-w-4xl items-center justify-center gap-3 text-sm text-white/70">
-          <HandPointer className="h-5 w-5 text-cyan-300" />
+          <MousePointer2 className="h-5 w-5 text-cyan-300" />
           <span>Interagisci con gli spot o scorri le card</span>
         </div>
 
