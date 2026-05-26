@@ -19,13 +19,13 @@ type InspectionSpot = {
 };
 
 const spots: InspectionSpot[] = [
-  { id: 'motore', title: 'Motore e trasmissione', x: '28%', y: '49%', icon: Wrench },
-  { id: 'freni', title: 'Impianto frenante', x: '29%', y: '76%', icon: Disc3 },
-  { id: 'sospensioni', title: 'Sospensioni e sterzo', x: '70%', y: '77%', icon: CircleGauge },
-  { id: 'elettronica', title: 'Elettronica e centraline', x: '64%', y: '54%', icon: Zap },
-  { id: 'carrozzeria', title: 'Carrozzeria e vernice', x: '49%', y: '34%', icon: ShieldCheck },
-  { id: 'interni', title: 'Interni e dotazioni', x: '57%', y: '43%', icon: Car },
-  { id: 'sicurezza', title: 'Sicurezza e airbag', x: '79%', y: '50%', icon: Gauge },
+  { id: 'motore', title: 'Motore e trasmissione', x: '25%', y: '55%', icon: Wrench },
+  { id: 'freni', title: 'Impianto frenante', x: '31%', y: '73%', icon: Disc3 },
+  { id: 'sospensioni', title: 'Sospensioni e sterzo', x: '76%', y: '73%', icon: CircleGauge },
+  { id: 'elettronica', title: 'Elettronica e centraline', x: '59%', y: '58%', icon: Zap },
+  { id: 'carrozzeria', title: 'Carrozzeria e vernice', x: '48%', y: '31%', icon: ShieldCheck },
+  { id: 'interni', title: 'Interni e dotazioni', x: '56%', y: '43%', icon: Car },
+  { id: 'sicurezza', title: 'Sicurezza e airbag', x: '72%', y: '49%', icon: Gauge },
 ];
 
 type Props = {
@@ -38,32 +38,39 @@ export function CarInspectionDiagram({ activeSpot, onSpotChange }: Props) {
 
   return (
     <div className="relative overflow-hidden rounded-[2rem] border border-cyan/20 bg-[#061827] p-4 shadow-glow sm:p-6 lg:p-8">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_25%_45%,rgba(18,207,244,.20),transparent_28%),radial-gradient(circle_at_75%_55%,rgba(18,207,244,.12),transparent_30%)]" />
-      <div className="pointer-events-none absolute inset-0 opacity-[0.08] [background-image:linear-gradient(rgba(18,207,244,.65)_1px,transparent_1px),linear-gradient(90deg,rgba(18,207,244,.65)_1px,transparent_1px)] [background-size:36px_36px]" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_25%_45%,rgba(18,207,244,.20),transparent_28%),radial-gradient(circle_at_75%_55%,rgba(18,207,244,.14),transparent_30%)]" />
+      <div className="pointer-events-none absolute inset-0 opacity-[0.09] [background-image:linear-gradient(rgba(18,207,244,.65)_1px,transparent_1px),linear-gradient(90deg,rgba(18,207,244,.65)_1px,transparent_1px)] [background-size:36px_36px]" />
 
       <svg
         viewBox="0 0 1100 520"
         className="relative z-10 h-auto w-full overflow-visible"
         role="img"
-        aria-label="Schema tecnico dell’auto con punti di controllo interattivi"
+        aria-label="Schema tecnico stile hatchback compatta con punti di controllo interattivi"
       >
         <defs>
-          <linearGradient id="golfBodyFill" x1="0" x2="1" y1="0" y2="1">
-            <stop offset="0%" stopColor="#0D2438" stopOpacity="0.98" />
-            <stop offset="55%" stopColor="#132D42" stopOpacity="0.82" />
-            <stop offset="100%" stopColor="#081522" stopOpacity="0.95" />
+          <linearGradient id="bodyFillGolfMk" x1="0" x2="1" y1="0" y2="1">
+            <stop offset="0%" stopColor="#0B2234" stopOpacity="0.98" />
+            <stop offset="55%" stopColor="#122E44" stopOpacity="0.86" />
+            <stop offset="100%" stopColor="#06111F" stopOpacity="0.96" />
           </linearGradient>
-          <linearGradient id="golfStroke" x1="0" x2="1" y1="0" y2="1">
-            <stop offset="0%" stopColor="#F2FBFF" stopOpacity="0.95" />
-            <stop offset="55%" stopColor="#9EEFFF" stopOpacity="0.75" />
-            <stop offset="100%" stopColor="#12CFF4" stopOpacity="0.65" />
+          <linearGradient id="bodyStrokeGolfMk" x1="0" x2="1" y1="0" y2="0">
+            <stop offset="0%" stopColor="#F4FCFF" stopOpacity="0.95" />
+            <stop offset="52%" stopColor="#A8F3FF" stopOpacity="0.82" />
+            <stop offset="100%" stopColor="#12CFF4" stopOpacity="0.62" />
           </linearGradient>
-          <linearGradient id="activeGlow" x1="0" x2="1">
-            <stop stopColor="#12CFF4" stopOpacity="0.2" />
-            <stop offset="1" stopColor="#12CFF4" stopOpacity="0" />
+          <linearGradient id="glassGolfMk" x1="0" x2="1" y1="0" y2="1">
+            <stop stopColor="#07111F" stopOpacity="0.96" />
+            <stop offset="1" stopColor="#0E3349" stopOpacity="0.78" />
           </linearGradient>
-          <filter id="carGlow" x="-20%" y="-30%" width="140%" height="160%">
+          <filter id="carNeonGlow" x="-20%" y="-30%" width="140%" height="160%">
             <feGaussianBlur stdDeviation="4" result="blur" />
+            <feMerge>
+              <feMergeNode in="blur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+          <filter id="softSpotGlow" x="-120%" y="-120%" width="340%" height="340%">
+            <feGaussianBlur stdDeviation="9" result="blur" />
             <feMerge>
               <feMergeNode in="blur" />
               <feMergeNode in="SourceGraphic" />
@@ -71,91 +78,117 @@ export function CarInspectionDiagram({ activeSpot, onSpotChange }: Props) {
           </filter>
         </defs>
 
-        <ellipse cx="560" cy="404" rx="405" ry="54" fill="#01070D" opacity="0.68" />
-        <ellipse cx="560" cy="398" rx="330" ry="32" fill="#12CFF4" opacity="0.06" />
+        <ellipse cx="560" cy="411" rx="420" ry="58" fill="#01070D" opacity="0.72" />
+        <ellipse cx="560" cy="404" rx="350" ry="34" fill="#12CFF4" opacity="0.065" />
 
-        {/* Golf-like compact hatchback body, no logo */}
+        {/* Compact hatchback silhouette: proportions inspired by a VW Golf, no logos or brand marks */}
         <g
-          className={`origin-center transition-transform duration-500 ease-out ${hasActive ? 'scale-[1.018]' : 'scale-100'}`}
-          filter="url(#carGlow)"
+          className={`origin-center transition-transform duration-500 ease-out ${hasActive ? 'scale-[1.022]' : 'scale-100'}`}
+          filter="url(#carNeonGlow)"
         >
+          {/* main body: short hood, five-door cabin, vertical rear hatch */}
           <path
-            d="M117 333 C133 292 177 268 253 257 L331 195 C383 154 447 133 535 135 L679 139 C750 143 804 170 858 215 L945 237 C1007 253 1038 286 1048 331 L1018 356 L946 356 C934 300 896 268 840 268 C783 268 741 305 731 358 L372 358 C360 304 320 270 264 270 C209 270 166 306 157 358 L101 355 C79 350 84 342 117 333 Z"
-            fill="url(#golfBodyFill)"
-            stroke="url(#golfStroke)"
+            d="M108 338
+               C126 305 159 286 223 276
+               C252 250 285 223 329 195
+               C389 156 460 141 548 143
+               L676 147
+               C733 151 783 171 829 207
+               L879 246
+               C940 253 997 273 1025 317
+               L1046 352
+               L1004 364
+               L936 364
+               C927 306 886 271 828 271
+               C769 271 728 309 720 366
+               L374 366
+               C366 309 324 272 266 272
+               C207 272 165 309 156 365
+               L115 364
+               C84 361 78 350 108 338 Z"
+            fill="url(#bodyFillGolfMk)"
+            stroke="url(#bodyStrokeGolfMk)"
             strokeWidth="3.4"
             strokeLinejoin="round"
           />
 
-          {/* hatchback roof and windows */}
+          {/* glasshouse with Golf-like thick C pillar and short rear */}
           <path
-            d="M304 257 L370 201 C414 166 464 151 535 152 L661 155 C723 158 769 181 818 222 L304 257 Z"
-            fill="#06111F"
-            opacity="0.82"
+            d="M304 273
+               L365 206
+               C414 166 475 153 555 155
+               L655 158
+               C716 160 761 180 804 216
+               L836 244
+               L756 254
+               L304 273 Z"
+            fill="url(#glassGolfMk)"
             stroke="#DDF8FF"
-            strokeOpacity="0.5"
+            strokeOpacity="0.55"
             strokeWidth="2"
+            strokeLinejoin="round"
           />
-          <path d="M392 199 L386 255" stroke="#12CFF4" strokeOpacity="0.34" strokeWidth="2" />
-          <path d="M529 153 L522 250" stroke="#12CFF4" strokeOpacity="0.34" strokeWidth="2" />
-          <path d="M661 158 L681 247" stroke="#12CFF4" strokeOpacity="0.34" strokeWidth="2" />
 
-          {/* doors, hood, front and rear details */}
-          <g fill="none" stroke="#DDF8FF" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M145 323 C185 296 232 281 310 267" strokeOpacity="0.46" strokeWidth="2" />
-            <path d="M174 307 L303 304" strokeOpacity="0.35" strokeWidth="1.8" />
-            <path d="M333 283 L698 281" strokeOpacity="0.31" strokeWidth="1.8" />
-            <path d="M718 280 L942 295" strokeOpacity="0.42" strokeWidth="1.8" />
-            <path d="M150 333 L214 333" strokeOpacity="0.45" strokeWidth="2" />
-            <path d="M368 333 L736 333" strokeOpacity="0.45" strokeWidth="2" />
-            <path d="M925 333 L1025 333" strokeOpacity="0.45" strokeWidth="2" />
-            <path d="M801 221 C846 232 889 236 935 243" strokeOpacity="0.4" strokeWidth="2" />
-            <path d="M930 263 L1018 284" strokeOpacity="0.35" strokeWidth="2" />
-            <path d="M146 339 L198 345" strokeOpacity="0.3" strokeWidth="1.5" />
-            <path d="M307 256 L310 333" strokeOpacity="0.25" strokeWidth="1.5" />
-            <path d="M518 253 L514 334" strokeOpacity="0.25" strokeWidth="1.5" />
-            <path d="M704 258 L724 334" strokeOpacity="0.25" strokeWidth="1.5" />
+          {/* window divisions and B/C pillars */}
+          <path d="M385 203 L374 267" stroke="#12CFF4" strokeOpacity="0.42" strokeWidth="2" />
+          <path d="M515 156 L506 260" stroke="#12CFF4" strokeOpacity="0.38" strokeWidth="2" />
+          <path d="M642 158 L669 257" stroke="#12CFF4" strokeOpacity="0.38" strokeWidth="2" />
+          <path d="M742 186 L754 255" stroke="#12CFF4" strokeOpacity="0.34" strokeWidth="2" />
+
+          {/* belt line, doors, hood, hatch and lamps */}
+          <g fill="none" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M138 335 C201 307 288 289 374 281 L735 279 C821 282 924 295 1018 324" stroke="#EFFBFF" strokeOpacity="0.48" strokeWidth="2.2" />
+            <path d="M176 321 L329 318" stroke="#12CFF4" strokeOpacity="0.34" strokeWidth="2" />
+            <path d="M352 319 L712 319" stroke="#12CFF4" strokeOpacity="0.28" strokeWidth="2" />
+            <path d="M762 318 L1014 326" stroke="#12CFF4" strokeOpacity="0.36" strokeWidth="2" />
+            <path d="M325 274 L315 356" stroke="#DDF8FF" strokeOpacity="0.28" strokeWidth="1.8" />
+            <path d="M500 265 L495 356" stroke="#DDF8FF" strokeOpacity="0.28" strokeWidth="1.8" />
+            <path d="M684 265 L704 356" stroke="#DDF8FF" strokeOpacity="0.28" strokeWidth="1.8" />
+            <path d="M811 244 L823 354" stroke="#DDF8FF" strokeOpacity="0.24" strokeWidth="1.6" />
+            <path d="M140 345 L200 351" stroke="#DDF8FF" strokeOpacity="0.46" strokeWidth="3" />
+            <path d="M963 337 L1031 339" stroke="#DDF8FF" strokeOpacity="0.44" strokeWidth="3" />
+            <path d="M889 251 C938 262 982 279 1014 311" stroke="#DDF8FF" strokeOpacity="0.33" strokeWidth="1.8" />
+            <path d="M231 276 C283 253 313 230 358 205" stroke="#DDF8FF" strokeOpacity="0.25" strokeWidth="1.5" />
           </g>
 
-          {/* wireframe mesh */}
-          <g opacity="0.16" stroke="#12CFF4" strokeWidth="1">
-            {Array.from({ length: 10 }).map((_, i) => (
-              <path key={`mesh-h-${i}`} d={`M150 ${245 + i * 13} C310 ${225 + i * 8} 720 ${225 + i * 8} 1012 ${268 + i * 8}`} fill="none" />
+          {/* handles and hatch details */}
+          <g fill="#12CFF4" opacity="0.38">
+            <rect x="430" y="303" width="24" height="4" rx="2" />
+            <rect x="601" y="303" width="24" height="4" rx="2" />
+          </g>
+
+          {/* wireframe mesh contours */}
+          <g opacity="0.18" stroke="#12CFF4" strokeWidth="1">
+            {Array.from({ length: 11 }).map((_, i) => (
+              <path key={`mesh-h-${i}`} d={`M135 ${244 + i * 12} C330 ${220 + i * 8} 740 ${226 + i * 8} 1030 ${276 + i * 8}`} fill="none" />
             ))}
-            {Array.from({ length: 14 }).map((_, i) => (
-              <path key={`mesh-v-${i}`} d={`M${190 + i * 58} 237 L${160 + i * 61} 356`} fill="none" />
+            {Array.from({ length: 15 }).map((_, i) => (
+              <path key={`mesh-v-${i}`} d={`M${178 + i * 57} 238 L${145 + i * 61} 365`} fill="none" />
             ))}
           </g>
 
           {/* wheels */}
           <g fill="#06111F" stroke="#E8FBFF" strokeLinecap="round" strokeLinejoin="round">
-            <circle cx="264" cy="358" r="68" strokeOpacity="0.86" strokeWidth="3.2" />
-            <circle cx="264" cy="358" r="43" strokeOpacity="0.42" strokeWidth="2" />
-            <circle cx="840" cy="358" r="68" strokeOpacity="0.86" strokeWidth="3.2" />
-            <circle cx="840" cy="358" r="43" strokeOpacity="0.42" strokeWidth="2" />
-            {Array.from({ length: 10 }).map((_, i) => {
-              const a = (i * Math.PI) / 5;
+            <circle cx="266" cy="365" r="70" strokeOpacity="0.88" strokeWidth="3.3" />
+            <circle cx="266" cy="365" r="46" strokeOpacity="0.45" strokeWidth="2" />
+            <circle cx="266" cy="365" r="9" strokeOpacity="0.5" strokeWidth="2" />
+            <circle cx="828" cy="365" r="70" strokeOpacity="0.88" strokeWidth="3.3" />
+            <circle cx="828" cy="365" r="46" strokeOpacity="0.45" strokeWidth="2" />
+            <circle cx="828" cy="365" r="9" strokeOpacity="0.5" strokeWidth="2" />
+            {Array.from({ length: 12 }).map((_, i) => {
+              const a = (i * Math.PI) / 6;
               return (
-                <g key={i} opacity="0.34">
-                  <line x1={264} y1={358} x2={264 + Math.cos(a) * 57} y2={358 + Math.sin(a) * 57} strokeWidth="1.2" />
-                  <line x1={840} y1={358} x2={840 + Math.cos(a) * 57} y2={358 + Math.sin(a) * 57} strokeWidth="1.2" />
+                <g key={i} opacity="0.36">
+                  <line x1={266} y1={365} x2={266 + Math.cos(a) * 60} y2={365 + Math.sin(a) * 60} strokeWidth="1.2" />
+                  <line x1={828} y1={365} x2={828 + Math.cos(a) * 60} y2={365 + Math.sin(a) * 60} strokeWidth="1.2" />
                 </g>
               );
             })}
           </g>
         </g>
 
-        {/* active highlight beams */}
-        {activeSpot && (
-          <g className="pointer-events-none opacity-80 transition-opacity duration-300">
-            <circle
-              cx={spots.find((s) => s.id === activeSpot)?.x.replace('%', '')}
-              cy={spots.find((s) => s.id === activeSpot)?.y.replace('%', '')}
-              r="0"
-              fill="transparent"
-            />
-          </g>
-        )}
+        {/* default luminous scan line */}
+        <path d="M148 333 C332 301 733 304 1025 331" stroke="#12CFF4" strokeOpacity="0.22" strokeWidth="4" fill="none" />
       </svg>
 
       {spots.map((spot) => {
@@ -174,13 +207,13 @@ export function CarInspectionDiagram({ activeSpot, onSpotChange }: Props) {
             style={{ left: spot.x, top: spot.y }}
           >
             <span
-              className={`absolute left-1/2 top-1/2 h-12 w-12 -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan/20 blur-xl transition duration-300 ${
-                active ? 'scale-150 opacity-100' : 'scale-100 opacity-60 group-hover:scale-125 group-hover:opacity-100'
+              className={`absolute left-1/2 top-1/2 h-14 w-14 -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan/20 blur-xl transition duration-300 ${
+                active ? 'scale-175 opacity-100' : 'scale-100 opacity-60 group-hover:scale-150 group-hover:opacity-100'
               }`}
             />
             <span
               className={`relative flex h-5 w-5 items-center justify-center rounded-full border-2 border-white bg-cyan shadow-glow transition duration-300 ${
-                active ? 'scale-150 ring-8 ring-cyan/20' : 'scale-100 group-hover:scale-125 group-hover:ring-8 group-hover:ring-cyan/20'
+                active ? 'scale-[1.65] ring-8 ring-cyan/20' : 'scale-100 group-hover:scale-125 group-hover:ring-8 group-hover:ring-cyan/20'
               }`}
             >
               <span className="h-1.5 w-1.5 rounded-full bg-white" />
