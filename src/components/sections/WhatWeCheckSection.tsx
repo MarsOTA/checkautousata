@@ -87,8 +87,8 @@ function getCoverFlowStyle(index: number, activeIndex: number, total: number) {
   const clamped = Math.max(-2, Math.min(2, diff));
 
   return {
-    transform: `translateX(${clamped * 315}px) scale(${abs === 0 ? 1 : abs === 1 ? 0.82 : 0.68}) rotateY(${clamped * -12}deg)`,
-    opacity: abs === 0 ? 1 : abs === 1 ? 0.35 : 0.11,
+    transform: `translateX(${clamped * 295}px) scale(${abs === 0 ? 1 : abs === 1 ? 0.84 : 0.70}) rotateY(${clamped * -12}deg)`,
+    opacity: abs === 0 ? 1 : abs === 1 ? 0.38 : 0.12,
     zIndex: 30 - abs,
     pointerEvents: abs > 2 ? 'none' : 'auto',
   } as const;
@@ -102,15 +102,15 @@ function InspectionImage({
   onActiveChange: (id: string) => void;
 }) {
   return (
-    <div className="relative mx-auto max-w-6xl overflow-hidden rounded-[2rem] border border-cyan-300/10 bg-[#081827] shadow-[0_28px_90px_rgba(0,0,0,0.42)]">
+    <div className="relative mx-auto max-w-6xl">
+      <div className="pointer-events-none absolute inset-x-[8%] bottom-[5%] h-20 rounded-[50%] bg-cyan-300/10 blur-3xl md:h-28" />
+
       <img
         src="/assets/inspection-car-open-hood.png"
         alt="Auto con cofano aperto pronta per il controllo tecnico"
-        className="block h-auto w-full select-none"
+        className="relative z-10 mx-auto block h-auto w-full max-w-[1180px] select-none"
         draggable={false}
       />
-
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#07111F]/20" />
 
       {inspectionAreas.map((area) => {
         const Icon = iconMap[area.icon];
@@ -133,7 +133,7 @@ function InspectionImage({
             />
             <span
               className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full blur-xl transition-all duration-300 ${
-                active ? 'h-18 w-18 opacity-80' : 'h-12 w-12 opacity-50 group-hover:h-16 group-hover:w-16'
+                active ? 'h-16 w-16 opacity-80' : 'h-12 w-12 opacity-50 group-hover:h-16 group-hover:w-16'
               }`}
               style={{ backgroundColor: area.color }}
             />
@@ -194,8 +194,8 @@ export function WhatWeCheckSection() {
 
   return (
     <section id="controlli" className="relative overflow-hidden bg-[#07111F] py-12 text-white md:py-14">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_22%,rgba(18,207,244,0.16),transparent_32%)]" />
-      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,17,31,0.96)_0%,rgba(7,17,31,0.60)_45%,rgba(7,17,31,0.98)_100%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_20%,rgba(18,207,244,0.14),transparent_30%)]" />
+      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,17,31,0.97)_0%,rgba(7,17,31,0.72)_45%,rgba(7,17,31,0.98)_100%)]" />
 
       <div className="container relative z-10 mx-auto px-4">
         <div className="mx-auto mb-8 max-w-4xl text-center md:mb-10">
@@ -208,7 +208,9 @@ export function WhatWeCheckSection() {
           </p>
         </div>
 
-        <InspectionImage activeId={activeId} onActiveChange={setActiveId} />
+        <div className="relative z-10">
+          <InspectionImage activeId={activeId} onActiveChange={setActiveId} />
+        </div>
 
         <div className="mt-4 text-center text-sm text-white/68 md:hidden">
           <span
@@ -218,8 +220,8 @@ export function WhatWeCheckSection() {
           <strong className="text-white">{activeArea.title}</strong>
         </div>
 
-        <div className="mt-8 md:mt-7">
-          <div className="relative mx-auto hidden h-[205px] max-w-7xl items-center justify-center overflow-hidden [perspective:1200px] lg:flex">
+        <div className="relative z-30 mt-[-34px] md:mt-[-52px]">
+          <div className="relative mx-auto hidden h-[215px] max-w-7xl items-center justify-center overflow-visible [perspective:1200px] lg:flex">
             {inspectionAreas.map((item, index) => {
               const Icon = iconMap[item.icon];
               const active = item.id === activeId;
@@ -230,14 +232,16 @@ export function WhatWeCheckSection() {
                   type="button"
                   onClick={() => setActiveId(item.id)}
                   onFocus={() => setActiveId(item.id)}
-                  className={`absolute h-[176px] w-[470px] rounded-[1.4rem] border p-5 text-left transition-all duration-500 ${
+                  className={`absolute h-[178px] w-[470px] rounded-[1.5rem] border p-5 text-left transition-all duration-500 ${
                     active
-                      ? 'border-white/25 bg-[#102033]/95 shadow-2xl backdrop-blur-xl'
-                      : 'border-white/10 bg-[#07111F]/82 backdrop-blur-md hover:border-white/20 hover:bg-[#0D1C2D]/90'
+                      ? 'border-white/25 bg-[#102033]/96 shadow-2xl backdrop-blur-xl'
+                      : 'border-white/10 bg-[#07111F]/88 backdrop-blur-md hover:border-white/20 hover:bg-[#0D1C2D]/92'
                   }`}
                   style={{
                     ...getCoverFlowStyle(index, activeIndex, inspectionAreas.length),
-                    boxShadow: active ? `0 0 42px ${item.softColor}` : undefined,
+                    boxShadow: active
+                      ? `0 0 42px ${item.softColor}, 0 18px 50px rgba(0,0,0,0.38)`
+                      : '0 14px 30px rgba(0,0,0,0.28)',
                   }}
                 >
                   <span
@@ -271,7 +275,7 @@ export function WhatWeCheckSection() {
             })}
           </div>
 
-          <div className="-mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth px-4 pb-4 lg:hidden">
+          <div className="-mx-4 mt-7 flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth px-4 pb-4 lg:hidden">
             {inspectionAreas.map((item) => {
               const Icon = iconMap[item.icon];
               const active = item.id === activeId;
