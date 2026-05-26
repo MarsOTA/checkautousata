@@ -1,106 +1,45 @@
-import { Car, CircleGauge, Disc3, Gauge, ShieldCheck, Wrench, Zap } from 'lucide-react';
-import type { ComponentType } from 'react';
+import { Car, CircleGauge, Disc3, Wrench, Zap } from 'lucide-react';
 
-export type CheckAreaId =
-  | 'motore'
-  | 'freni'
-  | 'sospensioni'
-  | 'elettronica'
-  | 'carrozzeria'
-  | 'interni'
-  | 'sicurezza';
-
-export type CheckArea = {
-  id: CheckAreaId;
+export type InspectionArea = {
+  id: string;
   title: string;
   description: string;
+  color: string;
+  softColor: string;
   x: string;
   y: string;
-  icon: ComponentType<{ className?: string }>;
+  icon: 'engine' | 'brakes' | 'suspension' | 'electronics' | 'body';
 };
 
-export const checkAreas: CheckArea[] = [
-  {
-    id: 'motore',
-    title: 'Motore e trasmissione',
-    description: 'Controllo visivo di motore, cambio, perdite, livelli e rumorosità anomale.',
-    x: '23%',
-    y: '57%',
-    icon: Wrench,
-  },
-  {
-    id: 'freni',
-    title: 'Impianto frenante',
-    description: 'Verifica di dischi, pastiglie, tubi freno, liquido e usura visibile.',
-    x: '31%',
-    y: '75%',
-    icon: Disc3,
-  },
-  {
-    id: 'sospensioni',
-    title: 'Sospensioni e sterzo',
-    description: 'Controllo di assetto, giochi, braccetti, rumorosità e componenti soggetti a usura.',
-    x: '73%',
-    y: '75%',
-    icon: CircleGauge,
-  },
-  {
-    id: 'elettronica',
-    title: 'Elettronica e centraline',
-    description: 'Lettura OBD-II, spie, errori memorizzati e principali anomalie elettroniche.',
-    x: '55%',
-    y: '58%',
-    icon: Zap,
-  },
-  {
-    id: 'carrozzeria',
-    title: 'Carrozzeria e vernice',
-    description: 'Segni di urti, riverniciature, difetti estetici, allineamenti e parti sostituite.',
-    x: '67%',
-    y: '50%',
-    icon: ShieldCheck,
-  },
-  {
-    id: 'interni',
-    title: 'Interni e dotazioni',
-    description: 'Usura abitacolo, comandi, climatizzazione, accessori e funzionamento dotazioni.',
-    x: '51%',
-    y: '38%',
-    icon: Car,
-  },
-  {
-    id: 'sicurezza',
-    title: 'Sicurezza e airbag',
-    description: 'Controlli visivi sugli elementi di sicurezza, cinture, airbag e dispositivi principali.',
-    x: '82%',
-    y: '52%',
-    icon: Gauge,
-  },
-];
-
-type Props = {
-  activeId: CheckAreaId;
-  onActiveChange: (id: CheckAreaId) => void;
+const iconMap = {
+  engine: Wrench,
+  brakes: Disc3,
+  suspension: CircleGauge,
+  electronics: Zap,
+  body: Car,
 };
 
-export function CarInspectionDiagram({ activeId, onActiveChange }: Props) {
+type CarInspectionDiagramProps = {
+  areas: InspectionArea[];
+  activeId: string;
+  onActiveChange: (id: string) => void;
+};
+
+export function CarInspectionDiagram({ areas, activeId, onActiveChange }: CarInspectionDiagramProps) {
   return (
-    <div className="relative mx-auto w-full max-w-6xl select-none px-2 py-8 sm:px-6 lg:py-12">
-      <div className="pointer-events-none absolute inset-x-[8%] bottom-[8%] h-24 rounded-full bg-cyan-300/20 blur-3xl" />
-      <div className="pointer-events-none absolute inset-x-[14%] bottom-[14%] h-8 rounded-full bg-black/50 blur-xl" />
-
-      <div className="relative z-10 mx-auto w-full">
+    <div className="relative mx-auto w-full max-w-6xl">
+      <div className="pointer-events-none absolute inset-x-[8%] bottom-[2%] h-20 rounded-[50%] bg-cyan-300/10 blur-2xl" />
+      <div className="relative mx-auto w-full px-2 sm:px-6">
         <img
           src="/assets/carinspect.svg"
-          alt="Schema tecnico auto con punti di controllo"
-          className="mx-auto block w-full max-w-5xl opacity-95 drop-shadow-[0_0_38px_rgba(18,207,244,0.22)]"
+          alt="Schema tecnico di un'auto con punti di controllo"
+          className="relative z-10 mx-auto w-full max-w-5xl select-none drop-shadow-[0_0_38px_rgba(18,207,244,0.18)]"
           draggable={false}
         />
 
-        {checkAreas.map((area) => {
-          const Icon = area.icon;
-          const isActive = activeId === area.id;
-
+        {areas.map((area) => {
+          const Icon = iconMap[area.icon];
+          const active = activeId === area.id;
           return (
             <button
               key={area.id}
@@ -109,30 +48,30 @@ export function CarInspectionDiagram({ activeId, onActiveChange }: Props) {
               onMouseEnter={() => onActiveChange(area.id)}
               onFocus={() => onActiveChange(area.id)}
               onClick={() => onActiveChange(area.id)}
-              className="group absolute -translate-x-1/2 -translate-y-1/2 outline-none"
+              className="group absolute z-20 -translate-x-1/2 -translate-y-1/2 outline-none"
               style={{ left: area.x, top: area.y }}
             >
+              <span className="absolute left-1/2 top-1/2 h-12 w-12 -translate-x-1/2 -translate-y-1/2 animate-ping rounded-full opacity-20" style={{ backgroundColor: area.color }} />
               <span
-                className={`absolute left-1/2 top-1/2 rounded-full bg-cyan-300/30 blur-xl transition-all duration-300 -translate-x-1/2 -translate-y-1/2 ${
-                  isActive ? 'h-20 w-20 opacity-100' : 'h-11 w-11 opacity-60 group-hover:h-16 group-hover:w-16 group-hover:opacity-100'
+                className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full blur-xl transition-all duration-300 ${
+                  active ? 'h-20 w-20 opacity-80' : 'h-12 w-12 opacity-45 group-hover:h-16 group-hover:w-16 group-hover:opacity-70'
                 }`}
+                style={{ backgroundColor: area.color }}
               />
               <span
-                className={`relative flex items-center justify-center rounded-full border-2 border-white bg-cyan-300 shadow-[0_0_30px_rgba(34,211,238,.9)] transition-all duration-300 ${
-                  isActive ? 'h-7 w-7 scale-125 ring-8 ring-cyan-300/20' : 'h-5 w-5 group-hover:scale-125 group-hover:ring-8 group-hover:ring-cyan-300/20'
+                className={`relative flex items-center justify-center rounded-full border-2 border-white bg-slate-950 shadow-2xl transition-all duration-300 ${
+                  active ? 'h-8 w-8 scale-110 ring-8 ring-white/10' : 'h-6 w-6 group-hover:scale-125 group-hover:ring-8 group-hover:ring-white/10'
                 }`}
+                style={{ boxShadow: `0 0 28px ${area.color}` }}
               >
-                <span className="h-2 w-2 rounded-full bg-white" />
+                <span className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: area.color }} />
               </span>
               <span
-                className={`pointer-events-none absolute left-1/2 top-9 z-20 min-w-max -translate-x-1/2 rounded-full border border-white/10 bg-slate-950/90 px-3 py-1.5 text-xs font-semibold text-white shadow-2xl backdrop-blur transition-all duration-200 ${
-                  isActive ? 'translate-y-0 opacity-100' : 'translate-y-1 opacity-0 group-hover:translate-y-0 group-hover:opacity-100'
+                className={`pointer-events-none absolute left-1/2 top-9 min-w-max -translate-x-1/2 rounded-full border border-white/10 bg-[#06111F]/90 px-3 py-1.5 text-xs font-semibold text-white shadow-xl backdrop-blur transition-all duration-200 ${
+                  active ? 'translate-y-0 opacity-100' : 'translate-y-1 opacity-0 group-hover:translate-y-0 group-hover:opacity-100'
                 }`}
               >
-                <span className="inline-flex items-center gap-2">
-                  <Icon className="h-3.5 w-3.5 text-cyan-300" />
-                  {area.title}
-                </span>
+                <span className="inline-flex items-center gap-2"><Icon className="h-3.5 w-3.5" style={{ color: area.color }} />{area.title}</span>
               </span>
             </button>
           );
