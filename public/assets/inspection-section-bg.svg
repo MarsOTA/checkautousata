@@ -1,15 +1,32 @@
 <svg width="1920" height="980" viewBox="0 0 1920 980" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <rect width="1920" height="980" fill="#07111F"/>
+  <rect width="1920" height="980" fill="#06111F"/>
   <defs>
-    <radialGradient id="g1" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(960 350) rotate(90) scale(520 960)"><stop stop-color="#12CFF4" stop-opacity="0.18"/><stop offset="1" stop-color="#12CFF4" stop-opacity="0"/></radialGradient>
-    <radialGradient id="g2" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(1550 420) rotate(90) scale(360 520)"><stop stop-color="#FFB547" stop-opacity="0.08"/><stop offset="1" stop-color="#FFB547" stop-opacity="0"/></radialGradient>
-    <linearGradient id="road" x1="0" y1="560" x2="1920" y2="980" gradientUnits="userSpaceOnUse"><stop stop-color="#0A1B33" stop-opacity="0.05"/><stop offset="0.5" stop-color="#121B27" stop-opacity="0.62"/><stop offset="1" stop-color="#03070D"/></linearGradient>
+    <radialGradient id="cyanGlow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(960 390) rotate(90) scale(520 900)">
+      <stop stop-color="#12CFF4" stop-opacity="0.22"/><stop offset="0.42" stop-color="#12CFF4" stop-opacity="0.08"/><stop offset="1" stop-color="#12CFF4" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="streetLight" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(1530 290) rotate(90) scale(380 480)">
+      <stop stop-color="#FFB547" stop-opacity="0.16"/><stop offset="1" stop-color="#FFB547" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="floor" x1="0" y1="560" x2="1920" y2="980" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#06111F" stop-opacity="0"/><stop offset="0.35" stop-color="#0D1B2A" stop-opacity="0.65"/><stop offset="1" stop-color="#020812"/>
+    </linearGradient>
+    <linearGradient id="horizon" x1="0" y1="0" x2="0" y2="980" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#081827"/><stop offset="0.42" stop-color="#06111F"/><stop offset="1" stop-color="#020812"/>
+    </linearGradient>
+    <filter id="blurBig" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="28"/></filter>
   </defs>
-  <rect width="1920" height="980" fill="url(#g1)"/>
-  <rect width="1920" height="980" fill="url(#g2)"/>
-  <g opacity="0.16"><rect x="112" y="176" width="280" height="280" rx="18" fill="#E6EEF6" fill-opacity="0.05"/><rect x="1450" y="128" width="300" height="340" rx="20" fill="#E6EEF6" fill-opacity="0.05"/><rect x="1340" y="238" width="190" height="240" rx="16" fill="#E6EEF6" fill-opacity="0.04"/><rect x="420" y="230" width="210" height="250" rx="16" fill="#E6EEF6" fill-opacity="0.035"/></g>
-  <g opacity="0.10" stroke="#DDF8FF"><path d="M0 625H1920"/><path d="M0 698H1920"/><path d="M0 770H1920"/><path d="M0 842H1920"/><path d="M145 635L20 980"/><path d="M450 635L330 980"/><path d="M760 635L690 980"/><path d="M1070 635L1120 980"/><path d="M1380 635L1510 980"/><path d="M1680 635L1880 980"/></g>
-  <path d="M0 600C310 570 560 590 820 610C1160 636 1470 605 1920 570V980H0V600Z" fill="url(#road)"/>
-  <rect y="0" width="1920" height="980" fill="url(#g1)" opacity="0.6"/>
-  <rect y="0" width="1920" height="980" fill="#03101D" opacity="0.28"/>
+  <rect width="1920" height="980" fill="url(#horizon)"/>
+  <rect width="1920" height="980" fill="url(#cyanGlow)"/><rect width="1920" height="980" fill="url(#streetLight)"/>
+  <g opacity="0.18" filter="url(#blurBig)">
+    <rect x="80" y="185" width="260" height="230" rx="26" fill="#EAFBFF" fill-opacity="0.055"/>
+    <rect x="380" y="220" width="190" height="250" rx="24" fill="#EAFBFF" fill-opacity="0.04"/>
+    <rect x="1340" y="145" width="360" height="320" rx="28" fill="#EAFBFF" fill-opacity="0.052"/>
+    <rect x="1500" y="190" width="260" height="260" rx="28" fill="#FFB547" fill-opacity="0.035"/>
+  </g>
+  <g opacity="0.09" stroke="#DDF8FF" stroke-width="2">
+    <path d="M105 430H470V220H105V430Z"/><path d="M1390 455H1740V170H1390V455Z"/><path d="M1440 455V220H1690V455"/><path d="M150 430V260H420V430"/><path d="M0 575H1920"/>
+  </g>
+  <path d="M0 585C330 550 620 574 878 605C1190 642 1510 606 1920 565V980H0V585Z" fill="url(#floor)"/>
+  <g opacity="0.09" stroke="#EAFBFF"><path d="M0 670H1920"/><path d="M0 745H1920"/><path d="M0 820H1920"/><path d="M0 900H1920"/><path d="M250 620L80 980"/><path d="M610 620L500 980"/><path d="M960 620V980"/><path d="M1310 620L1440 980"/><path d="M1650 620L1880 980"/></g>
+  <rect width="1920" height="980" fill="#020812" opacity="0.20"/><rect width="1920" height="980" fill="url(#cyanGlow)" opacity="0.70"/>
 </svg>
