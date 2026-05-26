@@ -8,6 +8,8 @@ export type InspectionArea = {
   softColor: string;
   x: string;
   y: string;
+  labelX?: string;
+  labelY?: string;
   icon: 'engine' | 'brakes' | 'suspension' | 'electronics' | 'body';
 };
 
@@ -31,14 +33,14 @@ export function CarInspectionDiagram({
   onActiveChange,
 }: CarInspectionDiagramProps) {
   return (
-    <div className="relative mx-auto w-full max-w-6xl">
-      <div className="pointer-events-none absolute inset-x-[8%] bottom-[2%] h-20 rounded-[50%] bg-cyan-300/10 blur-2xl" />
+    <div className="relative mx-auto w-full max-w-5xl">
+      <div className="pointer-events-none absolute inset-x-[14%] bottom-[4%] h-16 rounded-[50%] bg-cyan-300/10 blur-2xl" />
 
       <div className="relative mx-auto w-full px-2 sm:px-6">
         <img
           src="/assets/carinspect.svg"
           alt="Schema tecnico di un'auto con punti di controllo"
-          className="relative z-10 mx-auto w-full max-w-5xl select-none drop-shadow-[0_0_38px_rgba(18,207,244,0.18)]"
+          className="relative z-10 mx-auto w-full max-w-4xl select-none drop-shadow-[0_0_34px_rgba(18,207,244,0.18)]"
           draggable={false}
         />
 
@@ -58,39 +60,45 @@ export function CarInspectionDiagram({
               style={{ left: area.x, top: area.y }}
             >
               <span
-                className="absolute left-1/2 top-1/2 h-12 w-12 -translate-x-1/2 -translate-y-1/2 animate-ping rounded-full opacity-20"
+                className="absolute left-1/2 top-1/2 h-10 w-10 -translate-x-1/2 -translate-y-1/2 animate-ping rounded-full opacity-20"
                 style={{ backgroundColor: area.color }}
               />
               <span
                 className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full blur-xl transition-all duration-300 ${
                   active
-                    ? 'h-20 w-20 opacity-80'
-                    : 'h-12 w-12 opacity-45 group-hover:h-16 group-hover:w-16 group-hover:opacity-70'
+                    ? 'h-16 w-16 opacity-80'
+                    : 'h-10 w-10 opacity-45 group-hover:h-14 group-hover:w-14 group-hover:opacity-70'
                 }`}
                 style={{ backgroundColor: area.color }}
               />
               <span
                 className={`relative flex items-center justify-center rounded-full border-2 border-white bg-slate-950 shadow-2xl transition-all duration-300 ${
                   active
-                    ? 'h-8 w-8 scale-110 ring-8 ring-white/10'
-                    : 'h-6 w-6 group-hover:scale-125 group-hover:ring-8 group-hover:ring-white/10'
+                    ? 'h-7 w-7 scale-110 ring-8 ring-white/10'
+                    : 'h-5 w-5 group-hover:scale-125 group-hover:ring-8 group-hover:ring-white/10'
                 }`}
-                style={{ boxShadow: `0 0 28px ${area.color}` }}
+                style={{ boxShadow: `0 0 26px ${area.color}` }}
               >
                 <span
-                  className="h-2.5 w-2.5 rounded-full"
+                  className="h-2 w-2 rounded-full"
                   style={{ backgroundColor: area.color }}
                 />
               </span>
 
               <span
-                className={`pointer-events-none absolute left-1/2 top-9 min-w-max -translate-x-1/2 rounded-full border border-white/10 bg-[#06111F]/90 px-3 py-1.5 text-xs font-semibold text-white shadow-xl backdrop-blur transition-all duration-200 ${
+                className={`pointer-events-none absolute left-1/2 -translate-x-1/2 rounded-full border px-3 py-1.5 text-[11px] font-bold text-white shadow-xl backdrop-blur transition-all duration-200 ${
                   active
-                    ? 'translate-y-0 opacity-100'
-                    : 'translate-y-1 opacity-0 group-hover:translate-y-0 group-hover:opacity-100'
+                    ? 'scale-100 opacity-100'
+                    : 'scale-95 opacity-78 group-hover:scale-100 group-hover:opacity-100'
                 }`}
+                style={{
+                  top: area.labelY ?? '-42px',
+                  backgroundColor: active ? 'rgba(6,17,31,0.96)' : 'rgba(6,17,31,0.82)',
+                  borderColor: active ? area.color : 'rgba(255,255,255,0.12)',
+                  boxShadow: active ? `0 0 22px ${area.softColor}` : undefined,
+                }}
               >
-                <span className="inline-flex items-center gap-2">
+                <span className="inline-flex items-center gap-2 whitespace-nowrap">
                   <Icon className="h-3.5 w-3.5" style={{ color: area.color }} />
                   {area.title}
                 </span>

@@ -10,22 +10,24 @@ const inspectionAreas: InspectionArea[] = [
     id: 'motore',
     title: 'Motore e trasmissione',
     description:
-      'Controllo visivo di perdite, livelli, rumorosità, fumosità e funzionamento generale del gruppo motore.',
+      'Controllo visivo di perdite, livelli, rumorosità, fumosità e funzionamento generale.',
     color: '#B8FF2C',
-    softColor: 'rgba(184,255,44,0.16)',
+    softColor: 'rgba(184,255,44,0.18)',
     x: '25%',
     y: '57%',
+    labelY: '-44px',
     icon: 'engine',
   },
   {
     id: 'freni',
     title: 'Impianto frenante',
     description:
-      'Verifica di dischi, pastiglie, tubi freno, liquido e principali segnali di usura o manutenzione trascurata.',
+      'Verifica di dischi, pastiglie, tubi freno, liquido e principali segnali di usura.',
     color: '#FFB547',
-    softColor: 'rgba(255,181,71,0.16)',
+    softColor: 'rgba(255,181,71,0.18)',
     x: '31%',
     y: '74%',
+    labelY: '26px',
     icon: 'brakes',
   },
   {
@@ -34,31 +36,34 @@ const inspectionAreas: InspectionArea[] = [
     description:
       'Controllo di giochi, rumorosità, ammortizzatori, bracci, sterzo e componenti soggetti a usura.',
     color: '#22D3EE',
-    softColor: 'rgba(34,211,238,0.16)',
+    softColor: 'rgba(34,211,238,0.18)',
     x: '75%',
     y: '74%',
+    labelY: '26px',
     icon: 'suspension',
   },
   {
     id: 'elettronica',
     title: 'Elettronica e centraline',
     description:
-      'Diagnosi OBD-II, spie, errori memorizzati e controlli elettronici principali prima dell’acquisto.',
+      'Diagnosi OBD-II, spie, errori memorizzati e controlli elettronici principali.',
     color: '#A78BFA',
-    softColor: 'rgba(167,139,250,0.16)',
+    softColor: 'rgba(167,139,250,0.18)',
     x: '58%',
     y: '60%',
+    labelY: '26px',
     icon: 'electronics',
   },
   {
     id: 'carrozzeria',
     title: 'Carrozzeria e interni',
     description:
-      'Analisi di urti, riverniciature, allineamenti, usura abitacolo, comandi, clima e dotazioni principali.',
+      'Analisi di urti, riverniciature, allineamenti, usura abitacolo, comandi e dotazioni.',
     color: '#FB7185',
-    softColor: 'rgba(251,113,133,0.16)',
+    softColor: 'rgba(251,113,133,0.18)',
     x: '51%',
     y: '31%',
+    labelY: '-44px',
     icon: 'body',
   },
 ];
@@ -80,10 +85,10 @@ function getCoverFlowStyle(index: number, activeIndex: number, total: number) {
   const abs = Math.abs(diff);
   const clamped = Math.max(-2, Math.min(2, diff));
 
-  const translateX = clamped * 250;
-  const rotateY = clamped * -15;
+  const translateX = clamped * 315;
+  const rotateY = clamped * -12;
   const scale = abs === 0 ? 1 : abs === 1 ? 0.82 : 0.68;
-  const opacity = abs === 0 ? 1 : abs === 1 ? 0.34 : 0.12;
+  const opacity = abs === 0 ? 1 : abs === 1 ? 0.35 : 0.11;
   const zIndex = 30 - abs;
 
   return {
@@ -116,28 +121,27 @@ export function WhatWeCheckSection() {
   return (
     <section
       id="controlli"
-      className="relative overflow-hidden bg-[#07111F] py-14 text-white md:py-16"
+      className="relative overflow-hidden bg-[#07111F] py-10 text-white md:py-12"
     >
       <div className="absolute inset-0 bg-[url('/assets/inspection-section-bg.svg')] bg-cover bg-center opacity-80" />
-      <div className="absolute inset-0 bg-gradient-to-b from-[#07111F]/88 via-[#07111F]/42 to-[#07111F]/96" />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_28%,rgba(18,207,244,0.15),transparent_34%)]" />
+      <div className="absolute inset-0 bg-gradient-to-b from-[#07111F]/90 via-[#07111F]/44 to-[#07111F]/96" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_25%,rgba(18,207,244,0.15),transparent_31%)]" />
 
       <div className="container relative z-10 mx-auto px-4">
-        <div className="mx-auto mb-5 max-w-4xl text-center md:mb-7">
-          <p className="text-xs font-bold uppercase tracking-[0.28em] text-cyan-300 md:text-sm">
+        <div className="mx-auto mb-3 max-w-4xl text-center md:mb-4">
+          <p className="text-xs font-bold uppercase tracking-[0.28em] text-cyan-300">
             Cosa controlliamo
           </p>
-          <h2 className="mt-3 text-3xl font-black tracking-tight md:text-5xl">
+          <h2 className="mt-2 text-3xl font-black tracking-tight md:text-5xl">
             Ogni dettaglio,{' '}
             <span className="text-cyan-300">sotto controllo.</span>
           </h2>
-          <p className="mx-auto mt-4 max-w-3xl text-base leading-relaxed text-white/68 md:text-lg">
-            Clicca sui punti dell’auto o sulle card per scoprire le principali aree ispezionate
-            prima dell’acquisto.
+          <p className="mx-auto mt-3 max-w-3xl text-base leading-relaxed text-white/68">
+            Clicca sui punti dell’auto o sulle card per scoprire le principali aree ispezionate.
           </p>
         </div>
 
-        <div className="mx-auto max-w-6xl">
+        <div className="mx-auto max-w-5xl">
           <CarInspectionDiagram
             areas={inspectionAreas}
             activeId={activeId}
@@ -145,48 +149,27 @@ export function WhatWeCheckSection() {
           />
         </div>
 
-        <div className="mx-auto mt-4 flex max-w-3xl items-center justify-center gap-3 text-sm text-white/65">
-          <span
-            className="h-2 w-2 animate-pulse rounded-full"
-            style={{ backgroundColor: activeArea.color }}
-          />
-          <span>
-            Area attiva: <strong className="text-white">{activeArea.title}</strong>
-          </span>
-        </div>
-
-        <div className="mt-8 md:mt-10">
-          <div className="mb-4 flex items-end justify-between gap-5">
-            <div>
-              <p className="text-xs font-bold uppercase tracking-[0.24em] text-white/50 md:text-sm">
-                Aree ispezionate
-              </p>
-              <h3 className="mt-1 text-2xl font-black text-white md:text-3xl">
-                {activeArea.title}
-              </h3>
-            </div>
-
-            <div className="flex items-center gap-3">
-              <button
-                type="button"
-                onClick={goPrev}
-                aria-label="Card precedente"
-                className="rounded-2xl border border-white/10 bg-white/5 p-3 text-white transition hover:border-cyan-300/40 hover:bg-cyan-300/10"
-              >
-                <ArrowLeft className="h-5 w-5" />
-              </button>
-              <button
-                type="button"
-                onClick={goNext}
-                aria-label="Card successiva"
-                className="rounded-2xl border border-white/10 bg-white/5 p-3 text-white transition hover:border-cyan-300/40 hover:bg-cyan-300/10"
-              >
-                <ArrowRight className="h-5 w-5" />
-              </button>
-            </div>
+        <div className="mt-5 md:mt-6">
+          <div className="mb-2 flex items-center justify-end gap-3">
+            <button
+              type="button"
+              onClick={goPrev}
+              aria-label="Card precedente"
+              className="rounded-2xl border border-white/10 bg-white/5 p-3 text-white transition hover:border-cyan-300/40 hover:bg-cyan-300/10"
+            >
+              <ArrowLeft className="h-5 w-5" />
+            </button>
+            <button
+              type="button"
+              onClick={goNext}
+              aria-label="Card successiva"
+              className="rounded-2xl border border-white/10 bg-white/5 p-3 text-white transition hover:border-cyan-300/40 hover:bg-cyan-300/10"
+            >
+              <ArrowRight className="h-5 w-5" />
+            </button>
           </div>
 
-          <div className="relative mx-auto hidden h-[290px] max-w-6xl items-center justify-center overflow-hidden [perspective:1200px] lg:flex">
+          <div className="relative mx-auto hidden h-[205px] max-w-7xl items-center justify-center overflow-hidden [perspective:1200px] lg:flex">
             {inspectionAreas.map((item, index) => {
               const Icon = iconMap[item.icon];
               const active = item.id === activeId;
@@ -197,10 +180,10 @@ export function WhatWeCheckSection() {
                   type="button"
                   onClick={() => setActiveId(item.id)}
                   onFocus={() => setActiveId(item.id)}
-                  className={`absolute w-[320px] rounded-[1.6rem] border p-6 text-left transition-all duration-500 ${
+                  className={`absolute h-[176px] w-[470px] rounded-[1.4rem] border p-5 text-left transition-all duration-500 ${
                     active
                       ? 'border-white/25 bg-[#102033]/95 shadow-2xl backdrop-blur-xl'
-                      : 'border-white/10 bg-[#07111F]/78 backdrop-blur-md hover:border-white/20 hover:bg-[#0D1C2D]/86'
+                      : 'border-white/10 bg-[#07111F]/82 backdrop-blur-md hover:border-white/20 hover:bg-[#0D1C2D]/90'
                   }`}
                   style={{
                     ...getCoverFlowStyle(index, activeIndex, inspectionAreas.length),
@@ -217,31 +200,35 @@ export function WhatWeCheckSection() {
                     />
                   </span>
 
-                  <div
-                    className="mb-5 flex h-14 w-14 items-center justify-center rounded-full border"
-                    style={{
-                      borderColor: active ? item.color : 'rgba(255,255,255,0.12)',
-                      backgroundColor: active ? item.softColor : 'rgba(255,255,255,0.04)',
-                    }}
-                  >
-                    <Icon
-                      className="h-7 w-7"
-                      style={{ color: active ? item.color : 'rgba(255,255,255,0.72)' }}
-                    />
+                  <div className="flex h-full items-center gap-5">
+                    <div
+                      className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full border"
+                      style={{
+                        borderColor: active ? item.color : 'rgba(255,255,255,0.12)',
+                        backgroundColor: active ? item.softColor : 'rgba(255,255,255,0.04)',
+                      }}
+                    >
+                      <Icon
+                        className="h-8 w-8"
+                        style={{ color: active ? item.color : 'rgba(255,255,255,0.72)' }}
+                      />
+                    </div>
+
+                    <div className="pr-6">
+                      <h4 className="text-2xl font-black text-white">{item.title}</h4>
+                      <p className="mt-2 text-sm leading-relaxed text-white/66">
+                        {item.description}
+                      </p>
+
+                      <span
+                        className="mt-3 inline-flex items-center text-sm font-semibold"
+                        style={{ color: item.color }}
+                      >
+                        Scopri il controllo
+                        <ArrowRight className="ml-2 h-4 w-4" />
+                      </span>
+                    </div>
                   </div>
-
-                  <h4 className="text-xl font-black text-white">{item.title}</h4>
-                  <p className="mt-3 min-h-[86px] text-sm leading-relaxed text-white/66">
-                    {item.description}
-                  </p>
-
-                  <span
-                    className="mt-4 inline-flex items-center text-sm font-semibold"
-                    style={{ color: item.color }}
-                  >
-                    Scopri il controllo
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </span>
                 </button>
               );
             })}
@@ -277,7 +264,7 @@ export function WhatWeCheckSection() {
             })}
           </div>
 
-          <div className="mt-5 flex justify-center gap-2">
+          <div className="mt-3 flex justify-center gap-2">
             {inspectionAreas.map((item) => (
               <button
                 key={item.id}
