@@ -48,7 +48,7 @@ const inspectionAreas: InspectionArea[] = [
       'Controllo di giochi, rumorosità, ammortizzatori, bracci, sterzo e componenti soggetti a usura.',
     color: '#22D3EE',
     softColor: 'rgba(34,211,238,0.20)',
-    x: '46%',
+    x: '56%',
     y: '68%',
     mobileX: '66%',
     mobileY: '66%',
