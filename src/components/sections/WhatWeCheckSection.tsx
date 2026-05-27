@@ -37,7 +37,7 @@ const inspectionAreas: InspectionArea[] = [
     softColor: 'rgba(255,181,71,0.20)',
     x: '24%',
     y: '68%',
-    mobileX: '12%',
+    mobileX: '8%',
     mobileY: '66%',
     icon: 'brakes',
   },
