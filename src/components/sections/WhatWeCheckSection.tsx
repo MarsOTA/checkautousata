@@ -88,7 +88,9 @@ function getCoverFlowStyle(index: number, activeIndex: number, total: number) {
   const clamped = Math.max(-2, Math.min(2, diff));
 
   return {
-    transform: `translateX(${clamped * 295}px) scale(${abs === 0 ? 1 : abs === 1 ? 0.84 : 0.70}) rotateY(${clamped * -12}deg)`,
+    transform: `translateX(${clamped * 295}px) scale(${
+      abs === 0 ? 1 : abs === 1 ? 0.84 : 0.70
+    }) rotateY(${clamped * -12}deg)`,
     opacity: abs === 0 ? 1 : abs === 1 ? 0.38 : 0.12,
     zIndex: 30 - abs,
     pointerEvents: abs > 2 ? 'none' : 'auto',
@@ -160,13 +162,17 @@ function InspectionImage({
               />
               <span
                 className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full blur-xl transition-all duration-300 ${
-                  active ? 'h-16 w-16 opacity-80' : 'h-12 w-12 opacity-50 group-hover:h-16 group-hover:w-16'
+                  active
+                    ? 'h-16 w-16 opacity-80'
+                    : 'h-12 w-12 opacity-50 group-hover:h-16 group-hover:w-16'
                 }`}
                 style={{ backgroundColor: area.color }}
               />
               <span
                 className={`relative flex items-center justify-center rounded-full border-2 border-white bg-[#06111F] transition-all duration-300 ${
-                  active ? 'h-8 w-8 scale-110 ring-8 ring-white/10' : 'h-7 w-7 group-hover:scale-125 md:h-6 md:w-6'
+                  active
+                    ? 'h-8 w-8 scale-110 ring-8 ring-white/10'
+                    : 'h-7 w-7 group-hover:scale-125 md:h-6 md:w-6'
                 }`}
                 style={{ boxShadow: `0 0 26px ${area.color}` }}
               >
@@ -175,7 +181,9 @@ function InspectionImage({
 
               <span
                 className={`pointer-events-none absolute left-1/2 top-8 hidden min-w-max -translate-x-1/2 rounded-full border px-3 py-1.5 text-[11px] font-bold text-white shadow-xl backdrop-blur transition-all duration-200 md:block ${
-                  active ? 'translate-y-0 opacity-100' : 'translate-y-1 opacity-0 group-hover:translate-y-0 group-hover:opacity-100'
+                  active
+                    ? 'translate-y-0 opacity-100'
+                    : 'translate-y-1 opacity-0 group-hover:translate-y-0 group-hover:opacity-100'
                 }`}
                 style={{
                   backgroundColor: 'rgba(6,17,31,0.92)',
@@ -227,10 +235,13 @@ export function WhatWeCheckSection() {
 
       <div className="container relative z-10 mx-auto px-4">
         <div className="mx-auto mb-4 max-w-5xl text-center md:mb-5">
-          <p className="text-xs font-bold uppercase tracking-[0.34em] text-cyan-300">Cosa controlliamo</p>
-        <h2 className="mt-2 text-3xl font-black leading-[1.05] tracking-tight sm:text-4xl md:text-5xl lg:text-[60px]">
-  Ispezioniamo <span className="text-cyan-300">ogni dettaglio.</span>
-</h2>
+          <p className="text-xs font-bold uppercase tracking-[0.34em] text-cyan-300">
+            Cosa controlliamo
+          </p>
+
+          <h2 className="mt-2 text-3xl font-black leading-[1.05] tracking-tight sm:text-4xl md:text-5xl lg:text-[56px]">
+            Ogni dettaglio, <span className="text-cyan-300">sotto controllo.</span>
+          </h2>
         </div>
 
         <div className="relative z-10">
@@ -245,11 +256,9 @@ export function WhatWeCheckSection() {
           <strong className="text-white">{activeArea.title}</strong>
         </div>
 
+        {/* Qui controlli la distanza tra auto e cover-flow */}
         <div className="relative z-30 mt-5 md:mt-8">
-  <div className="relative mx-auto hidden h-[215px] max-w-7xl items-center justify-center overflow-visible [perspective:1200px] lg:flex">
-    ...
-  </div>
-</div>
+          <div className="relative mx-auto hidden h-[215px] max-w-7xl items-center justify-center overflow-visible [perspective:1200px] lg:flex">
             {inspectionAreas.map((item, index) => {
               const Icon = iconMap[item.icon];
               const active = item.id === activeId;
@@ -318,13 +327,16 @@ export function WhatWeCheckSection() {
                   onClick={() => setActiveId(item.id)}
                   onFocus={() => setActiveId(item.id)}
                   className={`relative min-w-[82vw] snap-center rounded-[1.5rem] border p-5 text-left transition sm:min-w-[420px] ${
-                    active ? 'border-white/25 bg-[#102033]/95 shadow-[0_0_28px_rgba(18,207,244,0.12)]' : 'border-white/10 bg-white/[0.04]'
+                    active
+                      ? 'border-white/25 bg-[#102033]/95 shadow-[0_0_28px_rgba(18,207,244,0.12)]'
+                      : 'border-white/10 bg-white/[0.04]'
                   }`}
                 >
                   <span
                     className="absolute right-5 top-5 h-3.5 w-3.5 rounded-full"
                     style={{ backgroundColor: item.color, boxShadow: `0 0 18px ${item.color}` }}
                   />
+
                   <div className="flex items-start gap-4">
                     <Icon className="mt-1 h-7 w-7 shrink-0" style={{ color: item.color }} />
                     <div>
@@ -344,7 +356,9 @@ export function WhatWeCheckSection() {
                 type="button"
                 aria-label={`Vai a ${item.title}`}
                 onClick={() => setActiveId(item.id)}
-                className={`h-2.5 rounded-full transition-all ${item.id === activeId ? 'w-8' : 'w-2.5 opacity-45'}`}
+                className={`h-2.5 rounded-full transition-all ${
+                  item.id === activeId ? 'w-8' : 'w-2.5 opacity-45'
+                }`}
                 style={{ backgroundColor: item.id === activeId ? item.color : '#8DA4B8' }}
               />
             ))}
