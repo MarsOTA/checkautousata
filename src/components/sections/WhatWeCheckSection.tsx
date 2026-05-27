@@ -19,9 +19,9 @@ const inspectionAreas: InspectionArea[] = [
     description:
       'Controllo visivo di perdite, livelli, rumorosità, fumosità e funzionamento generale.',
     color: '#B8FF2C',
-    softColor: 'rgba(184,255,44,0.18)',
-    x: '76%',
-    y: '44%',
+    softColor: 'rgba(184,255,44,0.20)',
+    x: '75%',
+    y: '45%',
     icon: 'engine',
   },
   {
@@ -30,9 +30,9 @@ const inspectionAreas: InspectionArea[] = [
     description:
       'Verifica di dischi, pastiglie, tubi freno, liquido e principali segnali di usura.',
     color: '#FFB547',
-    softColor: 'rgba(255,181,71,0.18)',
-    x: '23%',
-    y: '68%',
+    softColor: 'rgba(255,181,71,0.20)',
+    x: '24%',
+    y: '69%',
     icon: 'brakes',
   },
   {
@@ -41,8 +41,8 @@ const inspectionAreas: InspectionArea[] = [
     description:
       'Controllo di giochi, rumorosità, ammortizzatori, bracci, sterzo e componenti soggetti a usura.',
     color: '#22D3EE',
-    softColor: 'rgba(34,211,238,0.18)',
-    x: '67%',
+    softColor: 'rgba(34,211,238,0.20)',
+    x: '66%',
     y: '69%',
     icon: 'suspension',
   },
@@ -52,9 +52,9 @@ const inspectionAreas: InspectionArea[] = [
     description:
       'Diagnosi OBD-II, spie, errori memorizzati e controlli elettronici principali.',
     color: '#A78BFA',
-    softColor: 'rgba(167,139,250,0.18)',
-    x: '51%',
-    y: '49%',
+    softColor: 'rgba(167,139,250,0.20)',
+    x: '53%',
+    y: '50%',
     icon: 'electronics',
   },
   {
@@ -63,8 +63,8 @@ const inspectionAreas: InspectionArea[] = [
     description:
       'Analisi di urti, riverniciature, allineamenti, usura abitacolo, comandi e dotazioni.',
     color: '#FB7185',
-    softColor: 'rgba(251,113,133,0.18)',
-    x: '43%',
+    softColor: 'rgba(251,113,133,0.20)',
+    x: '44%',
     y: '33%',
     icon: 'body',
   },
@@ -80,6 +80,7 @@ const iconMap = {
 
 function getCoverFlowStyle(index: number, activeIndex: number, total: number) {
   let diff = index - activeIndex;
+
   if (diff > total / 2) diff -= total;
   if (diff < -total / 2) diff += total;
 
@@ -102,68 +103,95 @@ function InspectionImage({
   onActiveChange: (id: string) => void;
 }) {
   return (
-    <div className="relative mx-auto max-w-6xl">
-      <div className="pointer-events-none absolute inset-x-[8%] bottom-[5%] h-20 rounded-[50%] bg-cyan-300/10 blur-3xl md:h-28" />
+    <div className="relative mx-auto w-full max-w-6xl overflow-visible">
+      <div className="relative mx-auto min-h-[310px] overflow-hidden rounded-[2rem] md:min-h-[430px] lg:min-h-[500px]">
+        {/* Base scura */}
+        <div className="absolute inset-0 bg-[#07111F]" />
 
-      <img
-        src="/assets/inspection-car-open-hood.png"
-        alt="Auto con cofano aperto pronta per il controllo tecnico"
-        className="relative z-10 mx-auto block h-auto w-full max-w-[1180px] select-none"
-        draggable={false}
-      />
+        {/* Profondità ambiente */}
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,#06111F_0%,#08192B_42%,#050B14_100%)]" />
 
-      {inspectionAreas.map((area) => {
-        const Icon = iconMap[area.icon];
-        const active = activeId === area.id;
+        {/* Glow dietro l'auto */}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_42%,rgba(35,211,238,0.17),transparent_30%)]" />
+        <div className="absolute left-1/2 top-[44%] h-[180px] w-[72%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-300/8 blur-3xl" />
 
-        return (
-          <button
-            key={area.id}
-            type="button"
-            aria-label={area.title}
-            onClick={() => onActiveChange(area.id)}
-            onFocus={() => onActiveChange(area.id)}
-            onMouseEnter={() => onActiveChange(area.id)}
-            className="group absolute z-20 -translate-x-1/2 -translate-y-1/2 outline-none"
-            style={{ left: area.x, top: area.y }}
-          >
-            <span
-              className="absolute left-1/2 top-1/2 h-12 w-12 -translate-x-1/2 -translate-y-1/2 animate-ping rounded-full opacity-20"
-              style={{ backgroundColor: area.color }}
-            />
-            <span
-              className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full blur-xl transition-all duration-300 ${
-                active ? 'h-16 w-16 opacity-80' : 'h-12 w-12 opacity-50 group-hover:h-16 group-hover:w-16'
-              }`}
-              style={{ backgroundColor: area.color }}
-            />
-            <span
-              className={`relative flex items-center justify-center rounded-full border-2 border-white bg-[#06111F] transition-all duration-300 ${
-                active ? 'h-8 w-8 scale-110 ring-8 ring-white/10' : 'h-6 w-6 group-hover:scale-125'
-              }`}
-              style={{ boxShadow: `0 0 26px ${area.color}` }}
+        {/* Pavimento / strada simulata */}
+        <div className="absolute bottom-0 left-0 right-0 h-[42%] rounded-b-[2rem] bg-[linear-gradient(180deg,rgba(8,22,36,0)_0%,rgba(10,22,35,0.32)_28%,rgba(14,15,18,0.72)_60%,rgba(5,6,8,0.98)_100%)]" />
+
+        {/* Texture asfalto/prospettiva */}
+        <div className="absolute bottom-0 left-0 right-0 h-[38%] opacity-[0.075]">
+          <div className="absolute inset-0 bg-[repeating-linear-gradient(to_right,transparent,transparent_140px,rgba(255,255,255,0.065)_141px,transparent_142px)]" />
+          <div className="absolute inset-0 bg-[repeating-linear-gradient(to_bottom,transparent,transparent_58px,rgba(255,255,255,0.045)_59px,transparent_60px)]" />
+          <div className="absolute inset-0 bg-[linear-gradient(to_right,transparent_0%,rgba(255,255,255,0.10)_50%,transparent_100%)]" />
+        </div>
+
+        {/* Ombra e riflesso auto */}
+        <div className="absolute bottom-[13%] left-1/2 h-[92px] w-[60%] -translate-x-1/2 rounded-[999px] bg-cyan-300/10 blur-3xl" />
+        <div className="absolute bottom-[12%] left-1/2 h-[38px] w-[54%] -translate-x-1/2 rounded-[999px] bg-black/55 blur-xl" />
+        <div className="absolute bottom-[8%] left-1/2 h-[80px] w-[44%] -translate-x-1/2 rounded-[999px] bg-white/[0.035] blur-2xl" />
+
+        {/* PNG auto scontornata */}
+        <img
+          src="/assets/cars/inspection-car-open-hood.png"
+          alt="Auto con cofano aperto pronta per il controllo tecnico"
+          className="relative z-10 mx-auto block w-[96%] max-w-[1120px] select-none pt-14 md:w-[88%] md:pt-20 lg:w-[86%] lg:pt-24"
+          draggable={false}
+        />
+
+        {/* Hotspot interattivi */}
+        {inspectionAreas.map((area) => {
+          const Icon = iconMap[area.icon];
+          const active = activeId === area.id;
+
+          return (
+            <button
+              key={area.id}
+              type="button"
+              aria-label={area.title}
+              onClick={() => onActiveChange(area.id)}
+              onFocus={() => onActiveChange(area.id)}
+              onMouseEnter={() => onActiveChange(area.id)}
+              className="group absolute z-20 -translate-x-1/2 -translate-y-1/2 outline-none"
+              style={{ left: area.x, top: area.y }}
             >
-              <span className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: area.color }} />
-            </span>
-
-            <span
-              className={`pointer-events-none absolute left-1/2 top-8 hidden min-w-max -translate-x-1/2 rounded-full border px-3 py-1.5 text-[11px] font-bold text-white shadow-xl backdrop-blur transition-all duration-200 md:block ${
-                active ? 'translate-y-0 opacity-100' : 'translate-y-1 opacity-0 group-hover:translate-y-0 group-hover:opacity-100'
-              }`}
-              style={{
-                backgroundColor: 'rgba(6,17,31,0.92)',
-                borderColor: active ? area.color : 'rgba(255,255,255,0.12)',
-                boxShadow: active ? `0 0 22px ${area.softColor}` : undefined,
-              }}
-            >
-              <span className="inline-flex items-center gap-2 whitespace-nowrap">
-                <Icon className="h-3.5 w-3.5" style={{ color: area.color }} />
-                {area.title}
+              <span
+                className="absolute left-1/2 top-1/2 h-12 w-12 -translate-x-1/2 -translate-y-1/2 animate-ping rounded-full opacity-20"
+                style={{ backgroundColor: area.color }}
+              />
+              <span
+                className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full blur-xl transition-all duration-300 ${
+                  active ? 'h-16 w-16 opacity-80' : 'h-12 w-12 opacity-50 group-hover:h-16 group-hover:w-16'
+                }`}
+                style={{ backgroundColor: area.color }}
+              />
+              <span
+                className={`relative flex items-center justify-center rounded-full border-2 border-white bg-[#06111F] transition-all duration-300 ${
+                  active ? 'h-8 w-8 scale-110 ring-8 ring-white/10' : 'h-7 w-7 group-hover:scale-125 md:h-6 md:w-6'
+                }`}
+                style={{ boxShadow: `0 0 26px ${area.color}` }}
+              >
+                <span className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: area.color }} />
               </span>
-            </span>
-          </button>
-        );
-      })}
+
+              <span
+                className={`pointer-events-none absolute left-1/2 top-8 hidden min-w-max -translate-x-1/2 rounded-full border px-3 py-1.5 text-[11px] font-bold text-white shadow-xl backdrop-blur transition-all duration-200 md:block ${
+                  active ? 'translate-y-0 opacity-100' : 'translate-y-1 opacity-0 group-hover:translate-y-0 group-hover:opacity-100'
+                }`}
+                style={{
+                  backgroundColor: 'rgba(6,17,31,0.92)',
+                  borderColor: active ? area.color : 'rgba(255,255,255,0.12)',
+                  boxShadow: active ? `0 0 22px ${area.softColor}` : undefined,
+                }}
+              >
+                <span className="inline-flex items-center gap-2 whitespace-nowrap">
+                  <Icon className="h-3.5 w-3.5" style={{ color: area.color }} />
+                  {area.title}
+                </span>
+              </span>
+            </button>
+          );
+        })}
+      </div>
     </div>
   );
 }
@@ -194,8 +222,8 @@ export function WhatWeCheckSection() {
 
   return (
     <section id="controlli" className="relative overflow-hidden bg-[#07111F] py-12 text-white md:py-14">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_20%,rgba(18,207,244,0.14),transparent_30%)]" />
-      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,17,31,0.97)_0%,rgba(7,17,31,0.72)_45%,rgba(7,17,31,0.98)_100%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_20%,rgba(18,207,244,0.12),transparent_30%)]" />
+      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,17,31,0.98)_0%,rgba(7,17,31,0.72)_45%,rgba(7,17,31,0.98)_100%)]" />
 
       <div className="container relative z-10 mx-auto px-4">
         <div className="mx-auto mb-8 max-w-4xl text-center md:mb-10">
@@ -220,7 +248,7 @@ export function WhatWeCheckSection() {
           <strong className="text-white">{activeArea.title}</strong>
         </div>
 
-        <div className="relative z-30 mt-[-34px] md:mt-[-52px]">
+        <div className="relative z-30 mt-[-30px] md:mt-[-48px]">
           <div className="relative mx-auto hidden h-[215px] max-w-7xl items-center justify-center overflow-visible [perspective:1200px] lg:flex">
             {inspectionAreas.map((item, index) => {
               const Icon = iconMap[item.icon];
