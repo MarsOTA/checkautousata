@@ -245,8 +245,11 @@ export function WhatWeCheckSection() {
           <strong className="text-white">{activeArea.title}</strong>
         </div>
 
-        <div className="relative z-30 mt-[-36px] md:mt-[-58px]">
-          <div className="relative mx-auto hidden h-[215px] max-w-7xl items-center justify-center overflow-visible [perspective:1200px] lg:flex">
+        <div className="relative z-30 mt-5 md:mt-8">
+  <div className="relative mx-auto hidden h-[215px] max-w-7xl items-center justify-center overflow-visible [perspective:1200px] lg:flex">
+    ...
+  </div>
+</div>
             {inspectionAreas.map((item, index) => {
               const Icon = iconMap[item.icon];
               const active = item.id === activeId;
