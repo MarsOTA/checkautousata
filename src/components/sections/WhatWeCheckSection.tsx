@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState, type CSSProperties } from 'react';
 import { ArrowRight, Car, CircleGauge, Disc3, Wrench, Zap } from 'lucide-react';
 
 type InspectionArea = {
@@ -9,6 +9,8 @@ type InspectionArea = {
   softColor: string;
   x: string;
   y: string;
+  mobileX: string;
+  mobileY: string;
   icon: 'engine' | 'brakes' | 'suspension' | 'electronics' | 'body';
 };
 
@@ -22,6 +24,8 @@ const inspectionAreas: InspectionArea[] = [
     softColor: 'rgba(184,255,44,0.20)',
     x: '75%',
     y: '43%',
+    mobileX: '72%',
+    mobileY: '43%',
     icon: 'engine',
   },
   {
@@ -33,6 +37,8 @@ const inspectionAreas: InspectionArea[] = [
     softColor: 'rgba(255,181,71,0.20)',
     x: '24%',
     y: '68%',
+    mobileX: '27%',
+    mobileY: '66%',
     icon: 'brakes',
   },
   {
@@ -44,6 +50,8 @@ const inspectionAreas: InspectionArea[] = [
     softColor: 'rgba(34,211,238,0.20)',
     x: '66%',
     y: '68%',
+    mobileX: '66%',
+    mobileY: '66%',
     icon: 'suspension',
   },
   {
@@ -55,6 +63,8 @@ const inspectionAreas: InspectionArea[] = [
     softColor: 'rgba(167,139,250,0.20)',
     x: '53%',
     y: '49%',
+    mobileX: '53%',
+    mobileY: '50%',
     icon: 'electronics',
   },
   {
@@ -66,6 +76,8 @@ const inspectionAreas: InspectionArea[] = [
     softColor: 'rgba(251,113,133,0.20)',
     x: '44%',
     y: '32%',
+    mobileX: '45%',
+    mobileY: '33%',
     icon: 'body',
   },
 ];
@@ -136,7 +148,7 @@ function InspectionImage({
         <img
           src="/assets/cars/inspection-car-open-hood.png"
           alt="Auto con cofano aperto pronta per il controllo tecnico"
-          className="relative z-10 mx-auto block w-[96%] max-w-[1120px] select-none pt-8 md:w-[88%] md:pt-10 lg:w-[86%] lg:pt-12"
+          className="relative z-10 mx-auto block w-[118%] max-w-none -translate-x-[7%] select-none pt-10 md:w-[88%] md:max-w-[1120px] md:translate-x-0 md:pt-10 lg:w-[86%] lg:pt-12"
           draggable={false}
         />
 
@@ -153,8 +165,13 @@ function InspectionImage({
               onClick={() => onActiveChange(area.id)}
               onFocus={() => onActiveChange(area.id)}
               onMouseEnter={() => onActiveChange(area.id)}
-              className="group absolute z-20 -translate-x-1/2 -translate-y-1/2 outline-none"
-              style={{ left: area.x, top: area.y }}
+              className="group absolute z-20 left-[var(--spot-x-mobile)] top-[var(--spot-y-mobile)] -translate-x-1/2 -translate-y-1/2 outline-none md:left-[var(--spot-x)] md:top-[var(--spot-y)]"
+              style={{
+                '--spot-x': area.x,
+                '--spot-y': area.y,
+                '--spot-x-mobile': area.mobileX,
+                '--spot-y-mobile': area.mobileY,
+              } as CSSProperties}
             >
               <span
                 className="absolute left-1/2 top-1/2 h-12 w-12 -translate-x-1/2 -translate-y-1/2 animate-ping rounded-full opacity-20"
