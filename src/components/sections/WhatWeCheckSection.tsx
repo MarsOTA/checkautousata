@@ -35,7 +35,7 @@ const inspectionAreas: InspectionArea[] = [
       'Verifica di dischi, pastiglie, tubi freno, liquido e principali segnali di usura.',
     color: '#FFB547',
     softColor: 'rgba(255,181,71,0.20)',
-    x: '24%',
+    x: '14%',
     y: '68%',
     mobileX: '8%',
     mobileY: '66%',
