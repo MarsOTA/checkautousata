@@ -77,7 +77,7 @@ const inspectionAreas: InspectionArea[] = [
     x: '34%',
     y: '60%',
     mobileX: '35%',
-    mobileY: '23%',
+    mobileY: '60%',
     icon: 'body',
   },
 ];
