@@ -21,7 +21,7 @@ const inspectionAreas: InspectionArea[] = [
     color: '#B8FF2C',
     softColor: 'rgba(184,255,44,0.20)',
     x: '75%',
-    y: '45%',
+    y: '43%',
     icon: 'engine',
   },
   {
@@ -32,7 +32,7 @@ const inspectionAreas: InspectionArea[] = [
     color: '#FFB547',
     softColor: 'rgba(255,181,71,0.20)',
     x: '24%',
-    y: '69%',
+    y: '68%',
     icon: 'brakes',
   },
   {
@@ -43,7 +43,7 @@ const inspectionAreas: InspectionArea[] = [
     color: '#22D3EE',
     softColor: 'rgba(34,211,238,0.20)',
     x: '66%',
-    y: '69%',
+    y: '68%',
     icon: 'suspension',
   },
   {
@@ -54,7 +54,7 @@ const inspectionAreas: InspectionArea[] = [
     color: '#A78BFA',
     softColor: 'rgba(167,139,250,0.20)',
     x: '53%',
-    y: '50%',
+    y: '49%',
     icon: 'electronics',
   },
   {
@@ -65,7 +65,7 @@ const inspectionAreas: InspectionArea[] = [
     color: '#FB7185',
     softColor: 'rgba(251,113,133,0.20)',
     x: '44%',
-    y: '33%',
+    y: '32%',
     icon: 'body',
   },
 ];
@@ -104,16 +104,16 @@ function InspectionImage({
 }) {
   return (
     <div className="relative mx-auto w-full max-w-6xl overflow-visible">
-      <div className="relative mx-auto min-h-[310px] overflow-hidden rounded-[2rem] md:min-h-[430px] lg:min-h-[500px]">
+      <div className="relative mx-auto min-h-[285px] overflow-hidden rounded-[2rem] md:min-h-[390px] lg:min-h-[455px]">
         {/* Base scura */}
         <div className="absolute inset-0 bg-[#07111F]" />
 
         {/* Profondità ambiente */}
         <div className="absolute inset-0 bg-[linear-gradient(180deg,#06111F_0%,#08192B_42%,#050B14_100%)]" />
 
-        {/* Glow dietro l'auto */}
+        {/* Glow dietro auto */}
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_42%,rgba(35,211,238,0.17),transparent_30%)]" />
-        <div className="absolute left-1/2 top-[44%] h-[180px] w-[72%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-300/8 blur-3xl" />
+        <div className="absolute left-1/2 top-[45%] h-[165px] w-[72%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-300/8 blur-3xl" />
 
         {/* Pavimento / strada simulata */}
         <div className="absolute bottom-0 left-0 right-0 h-[42%] rounded-b-[2rem] bg-[linear-gradient(180deg,rgba(8,22,36,0)_0%,rgba(10,22,35,0.32)_28%,rgba(14,15,18,0.72)_60%,rgba(5,6,8,0.98)_100%)]" />
@@ -126,15 +126,15 @@ function InspectionImage({
         </div>
 
         {/* Ombra e riflesso auto */}
-        <div className="absolute bottom-[13%] left-1/2 h-[92px] w-[60%] -translate-x-1/2 rounded-[999px] bg-cyan-300/10 blur-3xl" />
-        <div className="absolute bottom-[12%] left-1/2 h-[38px] w-[54%] -translate-x-1/2 rounded-[999px] bg-black/55 blur-xl" />
-        <div className="absolute bottom-[8%] left-1/2 h-[80px] w-[44%] -translate-x-1/2 rounded-[999px] bg-white/[0.035] blur-2xl" />
+        <div className="absolute bottom-[12%] left-1/2 h-[86px] w-[60%] -translate-x-1/2 rounded-[999px] bg-cyan-300/10 blur-3xl" />
+        <div className="absolute bottom-[11%] left-1/2 h-[34px] w-[54%] -translate-x-1/2 rounded-[999px] bg-black/55 blur-xl" />
+        <div className="absolute bottom-[8%] left-1/2 h-[74px] w-[44%] -translate-x-1/2 rounded-[999px] bg-white/[0.035] blur-2xl" />
 
         {/* PNG auto scontornata */}
         <img
           src="/assets/cars/inspection-car-open-hood.png"
           alt="Auto con cofano aperto pronta per il controllo tecnico"
-          className="relative z-10 mx-auto block w-[96%] max-w-[1120px] select-none pt-14 md:w-[88%] md:pt-20 lg:w-[86%] lg:pt-24"
+          className="relative z-10 mx-auto block w-[96%] max-w-[1120px] select-none pt-8 md:w-[88%] md:pt-10 lg:w-[86%] lg:pt-12"
           draggable={false}
         />
 
@@ -221,26 +221,23 @@ export function WhatWeCheckSection() {
   }, [activeId]);
 
   return (
-    <section id="controlli" className="relative overflow-hidden bg-[#07111F] py-12 text-white md:py-14">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_20%,rgba(18,207,244,0.12),transparent_30%)]" />
+    <section id="controlli" className="relative overflow-hidden bg-[#07111F] pb-12 pt-18 text-white md:pb-14 md:pt-24">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_18%,rgba(18,207,244,0.12),transparent_28%)]" />
       <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,17,31,0.98)_0%,rgba(7,17,31,0.72)_45%,rgba(7,17,31,0.98)_100%)]" />
 
       <div className="container relative z-10 mx-auto px-4">
-        <div className="mx-auto mb-8 max-w-4xl text-center md:mb-10">
-          <p className="text-xs font-bold uppercase tracking-[0.28em] text-cyan-300">Cosa controlliamo</p>
-          <h2 className="mt-2 text-3xl font-black tracking-tight sm:text-4xl md:text-5xl">
+        <div className="mx-auto mb-4 max-w-5xl text-center md:mb-5">
+          <p className="text-xs font-bold uppercase tracking-[0.34em] text-cyan-300">Cosa controlliamo</p>
+          <h2 className="mt-2 text-4xl font-black leading-[0.95] tracking-tight sm:text-5xl md:text-7xl lg:text-8xl">
             Ogni dettaglio, <span className="text-cyan-300">sotto controllo.</span>
           </h2>
-          <p className="mx-auto mt-3 max-w-3xl text-sm leading-relaxed text-white/68 sm:text-base">
-            Dalla meccanica all’elettronica: seleziona uno spot o una card per esplorare le aree controllate.
-          </p>
         </div>
 
         <div className="relative z-10">
           <InspectionImage activeId={activeId} onActiveChange={setActiveId} />
         </div>
 
-        <div className="mt-4 text-center text-sm text-white/68 md:hidden">
+        <div className="mt-3 text-center text-sm text-white/68 md:hidden">
           <span
             className="mr-2 inline-block h-2.5 w-2.5 rounded-full align-middle"
             style={{ backgroundColor: activeArea.color }}
@@ -248,7 +245,7 @@ export function WhatWeCheckSection() {
           <strong className="text-white">{activeArea.title}</strong>
         </div>
 
-        <div className="relative z-30 mt-[-30px] md:mt-[-48px]">
+        <div className="relative z-30 mt-[-36px] md:mt-[-58px]">
           <div className="relative mx-auto hidden h-[215px] max-w-7xl items-center justify-center overflow-visible [perspective:1200px] lg:flex">
             {inspectionAreas.map((item, index) => {
               const Icon = iconMap[item.icon];
