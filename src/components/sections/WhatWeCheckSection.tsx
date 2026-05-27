@@ -228,7 +228,7 @@ export function WhatWeCheckSection() {
       <div className="container relative z-10 mx-auto px-4">
         <div className="mx-auto mb-4 max-w-5xl text-center md:mb-5">
           <p className="text-xs font-bold uppercase tracking-[0.34em] text-cyan-300">Cosa controlliamo</p>
-        <h2 className="mt-2 text-3xl font-black leading-[1.05] tracking-tight sm:text-4xl md:text-5xl lg:text-[56px]">
+        <h2 className="mt-2 text-3xl font-black leading-[1.05] tracking-tight sm:text-4xl md:text-5xl lg:text-[60px]">
   Ogni dettaglio, <span className="text-cyan-300">sotto controllo.</span>
 </h2>
         </div>
